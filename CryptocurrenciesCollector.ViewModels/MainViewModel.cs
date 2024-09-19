@@ -1,39 +1,42 @@
 
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CryptocurrenciesCollector.Models;
+using CryptocurrenciesCollector.Models.Interfaces;
 using CryptocurrenciesCollector.Services;
 
 namespace CryptocurrenciesCollector.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        private readonly CryptocurrencyApiService CryptoService;
+        private readonly ICryptocurrencyApiService cryptoService;
 
         [ObservableProperty]
-        private string cryptocurrencyId = "bitcoin";
+        private string selectedCryptocurrencyId;
 
-        private ObservableCollection<string> cryptocurrencyInfo = new ObservableCollection<string>();
+        public ObservableCollection<Cryptocurrency> CryptocurrencyInfo { get; } = [];
 
-        public ObservableCollection<string> Cryptocurrencies { get; set; }
+        public ObservableCollection<string> Cryptocurrencies { get; }
 
-        public MainViewModel(CryptocurrencyApiService cryptoService)
+        public MainViewModel(ICryptocurrencyApiService cryptoService)
         {
-            CryptoService = cryptoService;
+            this.cryptoService = cryptoService;
             Cryptocurrencies = new ObservableCollection<string>
             {
                 "bitcoin",
                 "ethereum",
                 "litecoin"
             };
-            
+            SelectedCryptocurrencyId = Cryptocurrencies[0];
         }
 
 
         [RelayCommand]
         public async Task GetCryptocurrencyById() {
-            var result = await CryptoService.GetAssetById(CryptocurrencyId);
-            cryptocurrencyInfo.Add(result);
+            var cryptocurrency = await cryptoService.GetAssetById(SelectedCryptocurrencyId);
+            CryptocurrencyInfo.Add(cryptocurrency);
         }
     }
 }

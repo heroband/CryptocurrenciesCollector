@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace CryptocurrenciesCollector.Models
 {
-    internal class Market
+    public class Market
     {
-        public required string Name { get; init; }
+        public required string ExchangeId { get; set; }
+        public decimal PriceUsd { get; set; }
 
     }
 }

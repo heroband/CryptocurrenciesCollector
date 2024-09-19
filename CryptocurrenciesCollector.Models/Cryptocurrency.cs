@@ -1,15 +1,15 @@
 
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace CryptocurrenciesCollector.Models
 {
     public class Cryptocurrency
     {
-        public required string Name { get; init; } 
-        public decimal Price { get; init; }
-        public double Volume { get; init; }
-        public decimal PriceChange { get; init; }
-        public decimal AvailableIn { get; init; }
-        public decimal MarketPrice { get; init; }
+        public required string Name { get; init; }
+        public decimal PriceUsd { get; init; }
+        public decimal VolumeUsd24Hr { get; init; }
+        public decimal ChangePercent24Hr { get; init; }
+        public List<Market>? Markets { get; set; }
     }
 }

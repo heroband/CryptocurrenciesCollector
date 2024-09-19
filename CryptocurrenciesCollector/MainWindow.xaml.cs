@@ -13,27 +13,19 @@ using CryptocurrenciesCollector.ViewModels;
 using CryptocurrenciesCollector.Services;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace CryptocurrenciesCollector
 {
     public partial class MainWindow : Window
     {
-        private readonly IConfiguration _configuration;
         public MainWindow()
         {
-            var builder = new ConfigurationBuilder()
-               .SetBasePath(Directory.GetCurrentDirectory())
-               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-            _configuration = builder.Build();
 
             InitializeComponent();
 
-            var apiKey = _configuration["ApiSettings:CoinCapApiKey"];
-            var cryptoService = new CryptocurrencyApiService(apiKey);
-
-            DataContext = new MainViewModel(cryptoService);
+            DataContext = App.Current.ServicesProvider.GetRequiredService<MainViewModel>();
         }
     }
 }

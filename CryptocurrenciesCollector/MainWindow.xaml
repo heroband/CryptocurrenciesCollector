@@ -11,7 +11,7 @@
                 Command="{Binding GetCryptocurrencyByIdCommand}" Width="150" Height="50" Grid.Column="0" Grid.Row="0">
         </Button>
         <ComboBox ItemsSource="{Binding Cryptocurrencies}"
-                  SelectedItem="{Binding CryptocurrencyId}"
+                  SelectedItem="{Binding SelectedCryptocurrencyId}"
                   HorizontalAlignment="Left" Margin="100,100,0,0" VerticalAlignment="Top" Width="120">
         </ComboBox>
 

@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using CryptocurrenciesCollector.Models;
+using CryptocurrenciesCollector.Models.Interfaces;
+using CryptocurrenciesCollector.Models.Responses;
+
 
 namespace CryptocurrenciesCollector.Services
 {
-    public class CryptocurrencyApiService
+    public class CryptocurrencyApiService : ICryptocurrencyApiService
     {
         private readonly HttpClient _httpClient;
 
@@ -17,16 +23,35 @@ namespace CryptocurrenciesCollector.Services
 
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
-
         }
 
-        public async Task<string> GetAssetById(string id)
+        public async Task<Cryptocurrency> GetAssetById(string id)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"https://api.coincap.io/v2/assets/{id}");
-            var response = await _httpClient.SendAsync(request);
-            response.EnsureSuccessStatusCode();
+            var assetResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets/{id}");
+            assetResponse.EnsureSuccessStatusCode();
+            var assetJson = await assetResponse.Content.ReadAsStringAsync();
+            var asset = JsonSerializer.Deserialize<AssetResponse>(assetJson);
 
-            return await response.Content.ReadAsStringAsync();
+            var assetMarketsResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets/{id}/markets");
+            assetMarketsResponse.EnsureSuccessStatusCode();
+            var assetMarketsJson = await assetMarketsResponse.Content.ReadAsStringAsync();
+            var assetMarkets = JsonSerializer.Deserialize<AssetMarketsResponse>(assetMarketsJson);
+
+
+            return new Cryptocurrency
+            {
+                Name = asset.Data.Name,
+                PriceUsd = decimal.Parse(asset.Data.PriceUsd, CultureInfo.InvariantCulture),
+                ChangePercent24Hr = decimal.Parse(asset.Data.ChangePercent24Hr, CultureInfo.InvariantCulture),
+                VolumeUsd24Hr = decimal.Parse(asset.Data.VolumeUsd24Hr, CultureInfo.InvariantCulture),
+                Markets = assetMarkets.Data
+                    .Select(m => new Market
+                    {
+                        ExchangeId = m.ExchangeId,
+                        PriceUsd = decimal.Parse(m.PriceUsd, CultureInfo.InvariantCulture)
+                    })
+                    .ToList(),
+            };
         }
     }
 }
