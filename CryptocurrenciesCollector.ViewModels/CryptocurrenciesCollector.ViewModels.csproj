@@ -11,4 +11,8 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CryptocurrenciesCollector.Services\CryptocurrenciesCollector.Services.csproj" />
+  </ItemGroup>
+
 </Project>
