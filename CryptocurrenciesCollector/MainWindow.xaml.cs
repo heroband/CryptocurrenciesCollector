@@ -27,5 +27,13 @@ namespace CryptocurrenciesCollector
 
             DataContext = App.Current.ServicesProvider.GetRequiredService<MainViewModel>();
         }
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is MainViewModel viewModel)
+            {
+                await viewModel.GetAssets();
+            }
+        }
+
     }
 }

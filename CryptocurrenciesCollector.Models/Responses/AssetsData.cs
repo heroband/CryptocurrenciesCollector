@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace CryptocurrenciesCollector.Models.Responses
 {
-    public class AssetResponse
+    public class AssetsData
     {
-        [JsonPropertyName("data")]
-        public required AssetDataResponse Data { get; set; }
-        [JsonPropertyName("timestamp")]
-        public required long Timestamp { get; set; }
-
+        [JsonPropertyName("name")]
+        public required string Name { get; init; }
+        [JsonPropertyName("rank")]
+        public required string Rank { get; init; }
     }
 }

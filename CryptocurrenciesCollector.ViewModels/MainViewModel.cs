@@ -16,7 +16,11 @@ namespace CryptocurrenciesCollector.ViewModels
         [ObservableProperty]
         private string selectedCryptocurrencyId;
 
-        public ObservableCollection<Cryptocurrency> CryptocurrencyInfo { get; } = [];
+        [ObservableProperty]
+        private Cryptocurrency? cryptocurrencyInfo;
+
+        public ObservableCollection<TopCryptocurrencies> TopCryptocurrencies { get; } = [];
+        //const int maxTopCryptocurrencies = 15;
 
         public ObservableCollection<string> Cryptocurrencies { get; }
 
@@ -32,11 +36,20 @@ namespace CryptocurrenciesCollector.ViewModels
             SelectedCryptocurrencyId = Cryptocurrencies[0];
         }
 
-
         [RelayCommand]
-        public async Task GetCryptocurrencyById() {
+        public async Task GetCryptocurrencyById()
+        {
             var cryptocurrency = await cryptoService.GetAssetById(SelectedCryptocurrencyId);
-            CryptocurrencyInfo.Add(cryptocurrency);
+            CryptocurrencyInfo = cryptocurrency;
+        }
+
+        public async Task GetAssets()
+        {
+            var topCryptocurrencies = await cryptoService.GetAssets();
+            foreach (var cryptocurrency in topCryptocurrencies)
+            {
+                TopCryptocurrencies.Add(cryptocurrency);
+            }
         }
     }
 }
