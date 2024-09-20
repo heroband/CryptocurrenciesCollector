@@ -9,6 +9,8 @@ namespace CryptocurrenciesCollector.Models.Responses
 {
     public class AssetsData
     {
+        [JsonPropertyName("id")]
+        public required string Id { get; init; }
         [JsonPropertyName("name")]
         public required string Name { get; init; }
         [JsonPropertyName("rank")]

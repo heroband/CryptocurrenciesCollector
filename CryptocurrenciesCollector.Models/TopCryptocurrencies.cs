@@ -9,6 +9,7 @@ namespace CryptocurrenciesCollector.Models
 {
     public class TopCryptocurrencies
     {
+        public required string Id { get; init; }
         public required string Name { get; init; }
         public required int Rank { get; init; }
     }

@@ -58,17 +58,24 @@
         </Grid>
 
         <ListView ItemsSource="{Binding CryptocurrencyInfo.Markets}"
-                  HorizontalAlignment="Right" VerticalAlignment="Center"
-                  Margin="0 0 15 15"
+                  HorizontalAlignment="Center" VerticalAlignment="Center"
+                  Margin="0 15 15 0"
                   Grid.Row="1" Grid.Column="1"
                   MaxHeight="200">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Markets" DisplayMemberBinding="{Binding ExchangeId}" Width="75"/>
-                    <GridViewColumn Header="MarketPrice" DisplayMemberBinding="{Binding PriceUsd}" Width="75"/>
+                    <GridViewColumn Header="MarketPrice" Width="75" DisplayMemberBinding="{Binding PriceUsd}">
+                        <GridViewColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="MarketPrice" MouseLeftButtonDown="SortByMarketPrice"/>
+                            </DataTemplate>
+                        </GridViewColumn.HeaderTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
+
 
         <ComboBox ItemsSource="{Binding Cryptocurrencies}"
                 SelectedItem="{Binding SelectedCryptocurrencyId}"

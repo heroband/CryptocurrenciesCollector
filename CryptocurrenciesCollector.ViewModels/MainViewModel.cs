@@ -14,7 +14,7 @@ namespace CryptocurrenciesCollector.ViewModels
         private readonly ICryptocurrencyApiService cryptoService;
 
         [ObservableProperty]
-        private string selectedCryptocurrencyId;
+        private string? selectedCryptocurrencyId;
 
         [ObservableProperty]
         private Cryptocurrency? cryptocurrencyInfo;
@@ -22,18 +22,12 @@ namespace CryptocurrenciesCollector.ViewModels
         public ObservableCollection<TopCryptocurrencies> TopCryptocurrencies { get; } = [];
         //const int maxTopCryptocurrencies = 15;
 
-        public ObservableCollection<string> Cryptocurrencies { get; }
+        public ObservableCollection<string>? Cryptocurrencies { get; } = [];
 
         public MainViewModel(ICryptocurrencyApiService cryptoService)
         {
             this.cryptoService = cryptoService;
-            Cryptocurrencies = new ObservableCollection<string>
-            {
-                "bitcoin",
-                "ethereum",
-                "litecoin"
-            };
-            SelectedCryptocurrencyId = Cryptocurrencies[0];
+            
         }
 
         [RelayCommand]
@@ -49,7 +43,9 @@ namespace CryptocurrenciesCollector.ViewModels
             foreach (var cryptocurrency in topCryptocurrencies)
             {
                 TopCryptocurrencies.Add(cryptocurrency);
+                Cryptocurrencies.Add(cryptocurrency.Id);
             }
+            SelectedCryptocurrencyId = Cryptocurrencies[0];
         }
     }
 }

@@ -50,6 +50,7 @@ namespace CryptocurrenciesCollector.Services
 
             return assets.Data.Select(asset => new TopCryptocurrencies
             {
+                Id = asset.Id,
                 Name = asset.Name,
                 Rank = int.Parse(asset.Rank)
             }).ToList();

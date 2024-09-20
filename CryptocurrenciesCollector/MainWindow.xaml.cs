@@ -14,12 +14,14 @@ using CryptocurrenciesCollector.Services;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.Extensions.DependencyInjection;
+using System.ComponentModel;
 
 
 namespace CryptocurrenciesCollector
 {
     public partial class MainWindow : Window
     {
+        private bool _isSortedAscending = true;
         public MainWindow()
         {
 
@@ -32,6 +34,30 @@ namespace CryptocurrenciesCollector
             if (DataContext is MainViewModel viewModel)
             {
                 await viewModel.GetAssets();
+            }
+        }
+
+        private void SortByMarketPrice(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is MainViewModel viewModel && viewModel.CryptocurrencyInfo != null)
+            {
+                var collectionView = CollectionViewSource.GetDefaultView(viewModel.CryptocurrencyInfo.Markets);
+                if (collectionView != null)
+                {
+                    collectionView.SortDescriptions.Clear();
+
+                    if (_isSortedAscending)
+                    {
+                        collectionView.SortDescriptions.Add(new SortDescription("PriceUsd", ListSortDirection.Ascending));
+                    }
+                    else
+                    {
+                        collectionView.SortDescriptions.Add(new SortDescription("PriceUsd", ListSortDirection.Descending));
+                    }
+
+                    _isSortedAscending = !_isSortedAscending;
+                    collectionView.Refresh();
+                }
             }
         }
 
