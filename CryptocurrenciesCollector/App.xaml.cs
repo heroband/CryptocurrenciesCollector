@@ -34,6 +34,7 @@ namespace CryptocurrenciesCollector
                 new CryptocurrencyApiService(_configuration["ApiSettings:CoinCapApiKey"])
             );
             services.AddSingleton<MainViewModel>();
+            
             return services.BuildServiceProvider();
         }
     }

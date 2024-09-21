@@ -15,51 +15,57 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
+using CryptocurrenciesCollector.Pages;
+using CryptocurrenciesCollector.Models;
+using CommunityToolkit.Mvvm.Input;
+using CryptocurrenciesCollector.Models.Interfaces;
 
 
 namespace CryptocurrenciesCollector
 {
     public partial class MainWindow : Window
     {
-        private bool _isSortedAscending = true;
         public MainWindow()
         {
-
             InitializeComponent();
-
             DataContext = App.Current.ServicesProvider.GetRequiredService<MainViewModel>();
-        }
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is MainViewModel viewModel)
-            {
-                await viewModel.GetAssets();
-            }
+            BaseFrame.Content = new DetailInformationPage();
         }
 
-        private void SortByMarketPrice(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is MainViewModel viewModel && viewModel.CryptocurrencyInfo != null)
-            {
-                var collectionView = CollectionViewSource.GetDefaultView(viewModel.CryptocurrencyInfo.Markets);
-                if (collectionView != null)
-                {
-                    collectionView.SortDescriptions.Clear();
 
-                    if (_isSortedAscending)
-                    {
-                        collectionView.SortDescriptions.Add(new SortDescription("PriceUsd", ListSortDirection.Ascending));
-                    }
-                    else
-                    {
-                        collectionView.SortDescriptions.Add(new SortDescription("PriceUsd", ListSortDirection.Descending));
-                    }
+        //private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        //{
+        //    BaseFrame.NavigationService.Navigate(new MainPage());
+        //    if (sender is Button button)
+        //    {
+        //        UpdateButtonVisibility(button);
+        //    }
+        //}
 
-                    _isSortedAscending = !_isSortedAscending;
-                    collectionView.Refresh();
-                }
-            }
-        }
+        //private void NavigateToDetailInformationPage(object sender, RoutedEventArgs e)
+        //{
+        //    BaseFrame.NavigationService.Navigate(new DetailInformationPage());
+        //    if (sender is Button button)
+        //    {
+        //        UpdateButtonVisibility(button);
+        //    }
+        //}
 
+        //private void NavigateToSearchPage(object sender, RoutedEventArgs e)
+        //{
+        //    BaseFrame.NavigationService.Navigate(new SearchPage());
+        //    if (sender is Button button)
+        //    {
+        //        UpdateButtonVisibility(button);
+        //    }
+        //}
+
+        //private void UpdateButtonVisibility(Button pressedButton)
+        //{
+        //    MainPageButton.Visibility = Visibility.Visible;
+        //    DetailInformationPageButton.Visibility = Visibility.Visible;
+
+        //    pressedButton.Visibility = Visibility.Hidden;
+        //}
     }
 }

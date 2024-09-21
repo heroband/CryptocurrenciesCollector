@@ -3,26 +3,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:CryptocurrenciesCollector"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        Loaded="Window_Loaded">
-    <!--<Frame Name="MainFrame" Background="White" NavigationUIVisibility="Hidden"/>-->
+        Title="MainWindow" Height="450" Width="800">
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <TextBlock Text="Top 10 Cryptocurrencies"
+                   HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Margin="0 15 0 0"
+                   Grid.Row="0" Grid.Column="0" 
+                   FontSize="18" FontWeight="Bold" FontFamily="Comic Sans MS"/>
         <ListView ItemsSource="{Binding TopCryptocurrencies}"
+                  SelectedItem="{Binding SelectedTopCryptocurrency, Mode=TwoWay}"
                   HorizontalAlignment="Center" VerticalAlignment="Top"
-                  Margin="0 15 0 0"
-                  Grid.Row="1" Grid.Column="0"
+                  Margin="0 50 0 0"
+                  Grid.RowSpan="3" Grid.Column="0"
                   MaxHeight="200">
             <ListView.View>
                 <GridView>
@@ -32,67 +38,34 @@
             </ListView.View>
         </ListView>
 
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Top"
-                  Margin="15 15 0 0" Grid.Row="0" Grid.Column="1">
+
+        <Grid Grid.Row="0" Grid.Column="1" Margin="0 15 15 0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Text="Name" Grid.Column="0" Grid.Row="0" FontWeight="Bold"/>
-            <TextBlock Text="Price (USD)" Grid.Column="1" Grid.Row="0" FontWeight="Bold"/>
-            <TextBlock Text="Volume (24Hr)" Grid.Column="2" Grid.Row="0" FontWeight="Bold"/>
-            <TextBlock Text="Change (24Hr %)" Grid.Column="3" Grid.Row="0" FontWeight="Bold"/>
-
-            <TextBlock Text="{Binding CryptocurrencyInfo.Name}" Grid.Column="0" Grid.Row="1"/>
-            <TextBlock Text="{Binding CryptocurrencyInfo.PriceUsd}" Grid.Column="1" Grid.Row="1"/>
-            <TextBlock Text="{Binding CryptocurrencyInfo.VolumeUsd24Hr}" Grid.Column="2" Grid.Row="1"/>
-            <TextBlock Text="{Binding CryptocurrencyInfo.ChangePercent24Hr}" Grid.Column="3" Grid.Row="1"/>
+            <TextBox x:Name="SearchTextBox" 
+                     Text="{Binding SearchText}"
+                     Height="30"
+                     VerticalAlignment="Top"
+                     Grid.Column="0"/>
+            
+            <Button Content="🔍" Width="30" Height="30" 
+                    VerticalAlignment="Top"
+                    Grid.Column="1"
+                    Command="{Binding SearchCommand}"/>
         </Grid>
 
-        <ListView ItemsSource="{Binding CryptocurrencyInfo.Markets}"
-                  HorizontalAlignment="Center" VerticalAlignment="Center"
-                  Margin="0 15 15 0"
-                  Grid.Row="1" Grid.Column="1"
-                  MaxHeight="200">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Markets" DisplayMemberBinding="{Binding ExchangeId}" Width="75"/>
-                    <GridViewColumn Header="MarketPrice" Width="75" DisplayMemberBinding="{Binding PriceUsd}">
-                        <GridViewColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="MarketPrice" MouseLeftButtonDown="SortByMarketPrice"/>
-                            </DataTemplate>
-                        </GridViewColumn.HeaderTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
-
-
-        <ComboBox ItemsSource="{Binding Cryptocurrencies}"
-                SelectedItem="{Binding SelectedCryptocurrencyId}"
-                HorizontalAlignment="Right" VerticalAlignment="Top" Width="120"
-                Margin="0,80,50,0"
-                Grid.Row="0" Grid.Column="0"/>
-
-
-        <Button Content="Load Assets" 
-                Command="{Binding GetCryptocurrencyByIdCommand}" Width="75" Height="25"
-                HorizontalAlignment="Right" VerticalAlignment="Top"
-                Margin="0,50,50,0"
-                Grid.Row="0" Grid.Column="0"/>
+        <Frame x:Name="BaseFrame" 
+               Margin="15"
+               Grid.RowSpan="2" Grid.Row="1" Grid.Column="1" Background="AliceBlue"/>
     </Grid>
 
-
-
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding GetAssetsCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
 </Window>

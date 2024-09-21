@@ -1,0 +1,61 @@
+﻿<Page x:Class="CryptocurrenciesCollector.Pages.DetailInformationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DetailInformationPage">
+
+    <Grid Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                
+                <TextBlock Text="Name " Grid.Column="0" Grid.Row="0" FontWeight="Bold" HorizontalAlignment="Left"/>
+                <TextBlock Text="Price (USD) " Grid.Column="0" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Left"/>
+                <TextBlock Text="Volume (24Hr) " Grid.Column="0" Grid.Row="2" FontWeight="Bold" HorizontalAlignment="Left"/>
+                <TextBlock Text="Change (24Hr%) " Grid.Column="0" Grid.Row="3" FontWeight="Bold" HorizontalAlignment="Left"/>
+
+                <TextBlock Text="{Binding CryptocurrencyInfo.Name}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding CryptocurrencyInfo.PriceUsd}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding CryptocurrencyInfo.VolumeUsd24Hr}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding CryptocurrencyInfo.ChangePercent24Hr}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left"/>
+            </Grid>
+
+            <ListView ItemsSource="{Binding CryptocurrencyInfo.Markets}"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"
+                      Margin="0 10 0 0"
+                      Grid.Row="1">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Markets" DisplayMemberBinding="{Binding ExchangeId}" Width="75"/>
+                        <GridViewColumn Header="MarketPrice" Width="75" DisplayMemberBinding="{Binding PriceUsd}">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="MarketPrice" MouseLeftButtonDown="SortByMarketPrice"/>
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </Grid>
+    </Grid>
+</Page>
