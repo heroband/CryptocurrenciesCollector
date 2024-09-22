@@ -6,61 +6,109 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:CryptocurrenciesCollector"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" 
+        ResizeMode="NoResize"
+        Height="600" Width="920"
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <TextBlock Text="Top 10 Cryptocurrencies"
-                   HorizontalAlignment="Center" VerticalAlignment="Top"
-                   Margin="0 15 0 0"
-                   Grid.Row="0" Grid.Column="0" 
-                   FontSize="18" FontWeight="Bold" FontFamily="Comic Sans MS"/>
-        <ListView ItemsSource="{Binding TopCryptocurrencies}"
-                  SelectedItem="{Binding SelectedTopCryptocurrency, Mode=TwoWay}"
-                  HorizontalAlignment="Center" VerticalAlignment="Top"
-                  Margin="0 50 0 0"
-                  Grid.RowSpan="3" Grid.Column="0"
-                  MaxHeight="200">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Rank" DisplayMemberBinding="{Binding Rank}" Width="150"/>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-
-
-        <Grid Grid.Row="0" Grid.Column="1" Margin="0 15 15 0">
+    <Border Background="#272537"
+            CornerRadius="30">
+        <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-            <TextBox x:Name="SearchTextBox" 
-                     Text="{Binding SearchText}"
-                     Height="30"
-                     VerticalAlignment="Top"
-                     Grid.Column="0"/>
-            
-            <Button Content="🔍" Width="30" Height="30" 
-                    VerticalAlignment="Top"
-                    Grid.Column="1"
-                    Command="{Binding SearchCommand}"/>
+            <TextBlock Text="Cryptocurrencies"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Margin="20 0 0 0"
+                       FontSize="22"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"/>
+
+            <StackPanel Grid.Row="1">
+                <RadioButton Content="Home" 
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"/>
+                <RadioButton Content="Detail Info" 
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"/>     
+                <RadioButton Content="Search" 
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"/>
+            </StackPanel>
+
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Text="{Binding SearchText}"
+                         Height="40"
+                         Width="250"
+                         HorizontalAlignment = "Left"
+                         VerticalAlignment="Center"
+                         Grid.Column="0"
+                         Style="{StaticResource TextboxTheme}"/>
+                <Button Content="🔍" Width="40" Height="40" 
+                        VerticalAlignment="Top"
+                        Grid.Column="1"
+                        Command="{Binding GetSearchedCryptocurrenciesCommand}"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="1"
+                  Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Top 10"
+                           HorizontalAlignment="Center" VerticalAlignment="Top"
+                           Margin="0 15 0 0"
+                           Grid.Row="0" Grid.Column="0" 
+                           FontSize="18" Foreground="White" FontWeight="Bold" FontFamily="Comic Sans MS"/>
+                <ListView ItemsSource="{Binding TopCryptocurrencies}"
+                           SelectedItem="{Binding SelectedTopCryptocurrency, Mode=TwoWay}"
+                           HorizontalAlignment="Center" VerticalAlignment="Top"
+                           Margin="0 50 0 15"
+                           Grid.Row="0" Grid.Column="0"
+                           Grid.RowSpan="2">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Rank" DisplayMemberBinding="{Binding Rank}" Width="150"/>
+                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <Frame x:Name="BaseFrame" 
+                       Margin="15 15 15 15"
+                       Grid.RowSpan="2" Grid.Row="0" Grid.Column="1"/>
+            </Grid>
+
+           
         </Grid>
-
-        <Frame x:Name="BaseFrame" 
-               Margin="15"
-               Grid.RowSpan="2" Grid.Row="1" Grid.Column="1" Background="AliceBlue"/>
-    </Grid>
+    </Border>
+    
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">

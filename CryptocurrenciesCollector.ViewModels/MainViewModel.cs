@@ -30,6 +30,8 @@ namespace CryptocurrenciesCollector.ViewModels
         public ObservableCollection<TopCryptocurrencies> TopCryptocurrencies { get; } = [];
         //const int maxTopCryptocurrencies = 15;
 
+        public ObservableCollection<ShortInfoCryptocurrency> SearchedCryptocurrencies { get; } = [];
+
 
         public MainViewModel(ICryptocurrencyApiService cryptoService)
         {
@@ -39,7 +41,7 @@ namespace CryptocurrenciesCollector.ViewModels
         partial void OnSelectedTopCryptocurrencyChanged(TopCryptocurrencies? value)
         {
             if (value != null)
-            {
+            { 
                 GetCryptocurrencyByIdCommand.Execute(value.Id);
             }
         }
@@ -54,7 +56,7 @@ namespace CryptocurrenciesCollector.ViewModels
         [RelayCommand]
         public async Task GetAssets()
         {
-            var topCryptocurrencies = await cryptoService.GetAssets();
+            var topCryptocurrencies = await cryptoService.GetTopAssets();
             TopCryptocurrencies.Clear();
             foreach (var cryptocurrency in topCryptocurrencies)
             {
@@ -63,11 +65,21 @@ namespace CryptocurrenciesCollector.ViewModels
         }
 
         [RelayCommand]
-        public void Search()
+        public async Task GetSearchedCryptocurrencies()
         {
             if (!string.IsNullOrEmpty(SearchText))
             {
-                Debug.WriteLine($"Искать: {SearchText}");
+                // Debug.WriteLine(SearchText);
+                var allCryptocurrencies = await cryptoService.GetAllAssets();
+                var filteredCryptocurrencies = allCryptocurrencies.
+                    Where(asset => asset.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+
+                SearchedCryptocurrencies.Clear();
+                foreach (var cryptocurrency in filteredCryptocurrencies)
+                {
+                    SearchedCryptocurrencies.Add(cryptocurrency);
+                }
             }
         }
 

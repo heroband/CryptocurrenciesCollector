@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CryptocurrenciesCollector.Models.Responses
 {
-    public class AssetsData
+    public class TopCryptocurrenciesData
     {
         [JsonPropertyName("id")]
         public required string Id { get; init; }

@@ -10,7 +10,7 @@ namespace CryptocurrenciesCollector.Models.Extensions
 {
     public static class CryptocurrencyExtensions
     {
-        public static Cryptocurrency ToCryptocurrency(this Asset asset, AssetMarket assetMarkets)
+        public static Cryptocurrency ToCryptocurrency(this CryptocurrencyAsset asset, MarketAsset assetMarkets)
         {
             return new Cryptocurrency
             {

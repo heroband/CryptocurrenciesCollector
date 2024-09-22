@@ -7,14 +7,20 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DetailInformationPage">
 
-    <Grid Background="White">
+    <Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid>
+            <TextBlock Text="Cryptocurrency detail information"
+                       Foreground="White"
+           HorizontalAlignment="Left" VerticalAlignment="Top"
+           Grid.Row="0" Grid.Column="0" 
+           FontSize="18" FontWeight="Bold" FontFamily="Comic Sans MS"/>
+
+            <Grid Margin="0 30 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -26,16 +32,15 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                
-                <TextBlock Text="Name " Grid.Column="0" Grid.Row="0" FontWeight="Bold" HorizontalAlignment="Left"/>
-                <TextBlock Text="Price (USD) " Grid.Column="0" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Left"/>
-                <TextBlock Text="Volume (24Hr) " Grid.Column="0" Grid.Row="2" FontWeight="Bold" HorizontalAlignment="Left"/>
-                <TextBlock Text="Change (24Hr%) " Grid.Column="0" Grid.Row="3" FontWeight="Bold" HorizontalAlignment="Left"/>
+                <TextBlock Text="Name " Foreground="White" Grid.Column="0" Grid.Row="0" FontWeight="Bold" HorizontalAlignment="Left"/>
+                <TextBlock Text="Price (USD) " Foreground="White" Grid.Column="0" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Left"/>
+                <TextBlock Text="Volume (24Hr) " Foreground="White" Grid.Column="0" Grid.Row="2" FontWeight="Bold" HorizontalAlignment="Left"/>
+                <TextBlock Text="Change (24Hr%) " Foreground="White" Grid.Column="0" Grid.Row="3" FontWeight="Bold" HorizontalAlignment="Left"/>
 
-                <TextBlock Text="{Binding CryptocurrencyInfo.Name}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left"/>
-                <TextBlock Text="{Binding CryptocurrencyInfo.PriceUsd}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"/>
-                <TextBlock Text="{Binding CryptocurrencyInfo.VolumeUsd24Hr}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left"/>
-                <TextBlock Text="{Binding CryptocurrencyInfo.ChangePercent24Hr}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding CryptocurrencyInfo.Name}" Foreground="White" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding CryptocurrencyInfo.PriceUsd}" Foreground="White" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding CryptocurrencyInfo.VolumeUsd24Hr}" Foreground="White" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding CryptocurrencyInfo.ChangePercent24Hr}" Foreground="White" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left"/>
             </Grid>
 
             <ListView ItemsSource="{Binding CryptocurrencyInfo.Markets}"
