@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CryptocurrenciesCollector.Models.Responses
 {
-    public class MarketData
+    public class MarketPriceData
     {
         [JsonPropertyName("exchangeId")]
         public required string ExchangeId { get; init; }

@@ -8,10 +8,10 @@ using System;
 
 namespace CryptocurrenciesCollector.Models.Responses
 {
-    public class CryptocurrencyAssets<T>
+    public class AssetsWrap<T>
     {
         [JsonPropertyName("data")]
-        public required List<T> Data { get; set; }
+        public required T Data { get; set; }
         [JsonPropertyName("timestamp")]
         public required long Timestamp { get; set; }
     }

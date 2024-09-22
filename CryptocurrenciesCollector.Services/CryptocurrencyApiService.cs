@@ -26,17 +26,17 @@ namespace CryptocurrenciesCollector.Services
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
         }
 
-        public async Task<Cryptocurrency> GetAssetById(string id)
+        public async Task<CryptocurrencyDetailedInfo> GetAssetById(string id)
         {
             var assetResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets/{id}");
             assetResponse.EnsureSuccessStatusCode();
             var assetJson = await assetResponse.Content.ReadAsStringAsync();
-            var asset = JsonSerializer.Deserialize<CryptocurrencyAsset>(assetJson);
+            var asset = JsonSerializer.Deserialize<AssetsWrap<CryptocurrencyDetailedData>>(assetJson);
 
             var assetMarketsResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets/{id}/markets");
             assetMarketsResponse.EnsureSuccessStatusCode();
             var assetMarketsJson = await assetMarketsResponse.Content.ReadAsStringAsync();
-            var assetMarkets = JsonSerializer.Deserialize<MarketAsset>(assetMarketsJson);
+            var assetMarkets = JsonSerializer.Deserialize<AssetsWrap<List<MarketPriceData>>>(assetMarketsJson);
 
             return asset.ToCryptocurrency(assetMarkets);
         }
@@ -46,7 +46,7 @@ namespace CryptocurrenciesCollector.Services
             var assetsResponse = await _httpClient.GetAsync("https://api.coincap.io/v2/assets");
             assetsResponse.EnsureSuccessStatusCode();
             var assetsJson = await assetsResponse.Content.ReadAsStringAsync();
-            var assets = JsonSerializer.Deserialize<CryptocurrencyAssets<TopCryptocurrenciesData>>(assetsJson);
+            var assets = JsonSerializer.Deserialize<AssetsWrap<List<TopCryptocurrenciesData>>>(assetsJson);
 
             return assets.Data.Select(asset => new TopCryptocurrencies
             {
@@ -56,19 +56,21 @@ namespace CryptocurrenciesCollector.Services
             }).ToList();
         }
 
-        public async Task<List<ShortInfoCryptocurrency>> GetAllAssets()
+        public async Task<List<CryptocurrenciesSearchIInfo>> GetSearchedAssets(string search)
         {
-            var assetsResponse = await _httpClient.GetAsync("https://api.coincap.io/v2/assets");
+            var assetsResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets?search={search}");
             assetsResponse.EnsureSuccessStatusCode();
             var assetsJson = await assetsResponse.Content.ReadAsStringAsync();
-            var assets = JsonSerializer.Deserialize<CryptocurrencyAssets<CryptocurrencyShortData>>(assetsJson);
+            var assets = JsonSerializer.Deserialize<AssetsWrap<List<CryptocurrencySearchData>>>(assetsJson);
 
-            return assets.Data.Select(asset => new ShortInfoCryptocurrency
+            return assets.Data.Select(asset => new CryptocurrenciesSearchIInfo
             {
                 Id = asset.Id,
                 Name = asset.Name,
                 PriceUsd = decimal.Parse(asset.PriceUsd, CultureInfo.InvariantCulture), 
-                ChangePercent24Hr = decimal.Parse(asset.ChangePercent24Hr, CultureInfo.InvariantCulture)
+                ChangePercent24Hr = string.IsNullOrEmpty(asset.ChangePercent24Hr)
+                                        ? 0
+                                        : decimal.Parse(asset.ChangePercent24Hr, CultureInfo.InvariantCulture)
             }).ToList();
         }
     }

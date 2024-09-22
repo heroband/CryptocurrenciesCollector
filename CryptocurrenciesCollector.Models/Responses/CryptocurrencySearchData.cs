@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CryptocurrenciesCollector.Models.Responses
 {
-    public class CryptocurrencyShortData
+    public class CryptocurrencySearchData
     {
         [JsonPropertyName("id")]
         public required string Id { get; init; }
@@ -16,6 +16,6 @@ namespace CryptocurrenciesCollector.Models.Responses
         [JsonPropertyName("priceUsd")]
         public required string PriceUsd { get; init; }
         [JsonPropertyName("changePercent24Hr")]
-        public required string ChangePercent24Hr { get; init; }
+        public required string? ChangePercent24Hr { get; init; }
     }
 }

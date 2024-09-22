@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CryptocurrenciesCollector.Models
 {
-    public class ShortInfoCryptocurrency
+    public class CryptocurrenciesSearchIInfo
     {
         public required string Id { get; init; }
         public required string Name { get; init; }

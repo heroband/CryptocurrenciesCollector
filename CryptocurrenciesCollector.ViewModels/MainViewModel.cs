@@ -19,7 +19,7 @@ namespace CryptocurrenciesCollector.ViewModels
         private readonly INavigationService? navigationService;
 
         [ObservableProperty]
-        private Cryptocurrency? cryptocurrencyInfo;
+        private CryptocurrencyDetailedInfo? cryptocurrencyInfo;
 
         [ObservableProperty]
         private TopCryptocurrencies? selectedTopCryptocurrency;
@@ -30,7 +30,7 @@ namespace CryptocurrenciesCollector.ViewModels
         public ObservableCollection<TopCryptocurrencies> TopCryptocurrencies { get; } = [];
         //const int maxTopCryptocurrencies = 15;
 
-        public ObservableCollection<ShortInfoCryptocurrency> SearchedCryptocurrencies { get; } = [];
+        public ObservableCollection<CryptocurrenciesSearchIInfo> SearchedCryptocurrencies { get; } = [];
 
 
         public MainViewModel(ICryptocurrencyApiService cryptoService)
@@ -69,14 +69,10 @@ namespace CryptocurrenciesCollector.ViewModels
         {
             if (!string.IsNullOrEmpty(SearchText))
             {
-                // Debug.WriteLine(SearchText);
-                var allCryptocurrencies = await cryptoService.GetAllAssets();
-                var filteredCryptocurrencies = allCryptocurrencies.
-                    Where(asset => asset.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
-                    .ToList();
+                var allCryptocurrencies = await cryptoService.GetSearchedAssets(SearchText);
 
                 SearchedCryptocurrencies.Clear();
-                foreach (var cryptocurrency in filteredCryptocurrencies)
+                foreach (var cryptocurrency in allCryptocurrencies)
                 {
                     SearchedCryptocurrencies.Add(cryptocurrency);
                 }
