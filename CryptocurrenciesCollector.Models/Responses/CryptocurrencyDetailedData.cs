@@ -14,8 +14,8 @@ namespace CryptocurrenciesCollector.Models.Responses
         [JsonPropertyName("priceUsd")]
         public required string PriceUsd { get; init; }
         [JsonPropertyName("volumeUsd24Hr")]
-        public required string? VolumeUsd24Hr { get; init; }
+        public string? VolumeUsd24Hr { get; init; }
         [JsonPropertyName("changePercent24Hr")]
-        public required string? ChangePercent24Hr { get; init; }
+        public string? ChangePercent24Hr { get; init; }
     }
 }

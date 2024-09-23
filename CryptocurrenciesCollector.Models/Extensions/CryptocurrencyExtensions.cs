@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace CryptocurrenciesCollector.Models.Extensions
 {
     public static class CryptocurrencyExtensions
     {
-        public static CryptocurrencyDetailedInfo ToCryptocurrency(this AssetsWrap<CryptocurrencyDetailedData> asset, AssetsWrap<List<MarketPriceData>> assetMarkets)
+        public static CryptocurrencyDetailedInfo ToDetailedInfoCryptocurrency(this AssetsWrap<CryptocurrencyDetailedData> asset, AssetsWrap<List<MarketPriceData>> assetMarkets)
         {
             return new CryptocurrencyDetailedInfo
             {
@@ -26,10 +27,42 @@ namespace CryptocurrenciesCollector.Models.Extensions
                     .Select(m => new MarketPrice
                     {
                         ExchangeId = m.ExchangeId,
-                        PriceUsd = decimal.Parse(m.PriceUsd, CultureInfo.InvariantCulture)
+                        PriceUsd = decimal.TryParse(m.PriceUsd, CultureInfo.InvariantCulture, out decimal price) ? price : 0
                     })
                     .ToList(),
             };
+        }
+
+        public static List<TopCryptocurrencies> ToTopCryptocurrencies(this AssetsWrap<List<TopCryptocurrenciesData>> assets)
+        {
+            return assets.Data
+                .Select(asset => new TopCryptocurrencies
+                {
+                    Id = asset.Id,
+                    Name = asset.Name,
+                    Rank = int.Parse(asset.Rank)
+                })
+                .ToList();
+        }
+
+
+
+        public static List<CryptocurrencySearchIInfo> ToShortInfoCryptocurrency(this AssetsWrap<List<CryptocurrencySearchData>> assets)
+        {
+            return assets.Data
+                .Select(asset => new CryptocurrencySearchIInfo
+                {
+                
+                    Id = asset.Id,
+                    Name = asset.Name,
+                    PriceUsd = string.IsNullOrEmpty(asset.PriceUsd) 
+                                   ? 0 
+                                   : decimal.Parse(asset.PriceUsd, CultureInfo.InvariantCulture),
+                    ChangePercent24Hr = string.IsNullOrEmpty(asset.ChangePercent24Hr)
+                                            ? 0
+                                            : decimal.Parse(asset.ChangePercent24Hr, CultureInfo.InvariantCulture)
+                })
+                .ToList();
         }
     }
 }

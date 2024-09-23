@@ -12,17 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CryptocurrenciesCollector.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CryptocurrenciesCollector.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для SearchPage.xaml
-    /// </summary>
     public partial class SearchPage : Page
     {
-        public SearchPage()
+        public SearchPage(MainViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
+
         }
     }
 }

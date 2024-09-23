@@ -7,7 +7,24 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
 
-    <Grid Background="Aqua">
-        <TextBlock Text="Main page"></TextBlock>
+    <Grid >
+        <TextBlock Text="Top 10"
+           HorizontalAlignment="Center" VerticalAlignment="Top"
+           Margin="0 15 0 0"
+           Grid.Row="0" Grid.Column="0" 
+           FontSize="18" Foreground="White" FontWeight="Bold" FontFamily="Comic Sans MS"/>
+        <ListView ItemsSource="{Binding TopCryptocurrencies}"
+           SelectedItem="{Binding SelectedTopCryptocurrency, Mode=TwoWay}"
+           HorizontalAlignment="Center" VerticalAlignment="Top"
+           Margin="0 50 0 15"
+           Grid.Row="0" Grid.Column="0"
+           Grid.RowSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Rank" DisplayMemberBinding="{Binding Rank}" Width="150"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Page>

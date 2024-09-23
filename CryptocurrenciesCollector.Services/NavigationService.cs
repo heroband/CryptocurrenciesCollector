@@ -5,21 +5,31 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using CryptocurrenciesCollector.Models.Enums;
 using CryptocurrenciesCollector.Models.Interfaces;
 
 namespace CryptocurrenciesCollector.Services
 {
     public class NavigationService : INavigationService
     {
-        private readonly Frame _frame;
+        private readonly Frame frame;
+        private readonly Dictionary<NavigationPage, Func<Page>> pages;
+
         public NavigationService(Frame frame)
         {
-            _frame = frame;
+            this.frame = frame;
+            pages = [];
         }
 
-        public void NavigateTo(string cryptocurrencyId)
+        public void AddNavigationPage(NavigationPage navigationPage, Func<Page> page)
         {
-            
+            pages.Add(navigationPage, page);
+        }
+
+        public void NavigateTo(NavigationPage navigationPage)
+        {
+            var page = pages[navigationPage];
+            frame.NavigationService.Navigate(page());
         }
     }
 }

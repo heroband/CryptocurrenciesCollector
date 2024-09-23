@@ -38,40 +38,27 @@ namespace CryptocurrenciesCollector.Services
             var assetMarketsJson = await assetMarketsResponse.Content.ReadAsStringAsync();
             var assetMarkets = JsonSerializer.Deserialize<AssetsWrap<List<MarketPriceData>>>(assetMarketsJson);
 
-            return asset.ToCryptocurrency(assetMarkets);
+            return asset.ToDetailedInfoCryptocurrency(assetMarkets);
         }
 
-        public async Task<List<TopCryptocurrencies>> GetTopAssets()
+        public async Task<List<TopCryptocurrencies>> GetTopAssets(int number)
         {
-            var assetsResponse = await _httpClient.GetAsync("https://api.coincap.io/v2/assets");
+            var assetsResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets?limit={number}");
             assetsResponse.EnsureSuccessStatusCode();
             var assetsJson = await assetsResponse.Content.ReadAsStringAsync();
             var assets = JsonSerializer.Deserialize<AssetsWrap<List<TopCryptocurrenciesData>>>(assetsJson);
 
-            return assets.Data.Select(asset => new TopCryptocurrencies
-            {
-                Id = asset.Id,
-                Name = asset.Name,
-                Rank = int.Parse(asset.Rank)
-            }).ToList();
+            return assets.ToTopCryptocurrencies();
         }
 
-        public async Task<List<CryptocurrenciesSearchIInfo>> GetSearchedAssets(string search)
+        public async Task<List<CryptocurrencySearchIInfo>> GetSearchedAssets(string search)
         {
             var assetsResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets?search={search}");
             assetsResponse.EnsureSuccessStatusCode();
             var assetsJson = await assetsResponse.Content.ReadAsStringAsync();
             var assets = JsonSerializer.Deserialize<AssetsWrap<List<CryptocurrencySearchData>>>(assetsJson);
 
-            return assets.Data.Select(asset => new CryptocurrenciesSearchIInfo
-            {
-                Id = asset.Id,
-                Name = asset.Name,
-                PriceUsd = decimal.Parse(asset.PriceUsd, CultureInfo.InvariantCulture), 
-                ChangePercent24Hr = string.IsNullOrEmpty(asset.ChangePercent24Hr)
-                                        ? 0
-                                        : decimal.Parse(asset.ChangePercent24Hr, CultureInfo.InvariantCulture)
-            }).ToList();
+            return assets.ToShortInfoCryptocurrency();
         }
     }
 }

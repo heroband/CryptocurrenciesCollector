@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:CryptocurrenciesCollector"
+        xmlns:enums="clr-namespace:CryptocurrenciesCollector.Models.Enums;assembly=CryptocurrenciesCollector.Models"
         mc:Ignorable="d"
         Title="MainWindow" 
         ResizeMode="NoResize"
@@ -38,16 +39,22 @@
                              Height="50"
                              Foreground="White"
                              FontSize="14"
+                             Command="{Binding NavigateToCommand}"
+                             CommandParameter="{x:Static enums:NavigationPage.Main}"
                              Style="{StaticResource MenuButtonTheme}"/>
                 <RadioButton Content="Detail Info" 
                              Height="50"
                              Foreground="White"
                              FontSize="14"
+                             Command="{Binding NavigateToCommand}"
+                             CommandParameter="{x:Static enums:NavigationPage.DetailInformation}"
                              Style="{StaticResource MenuButtonTheme}"/>     
                 <RadioButton Content="Search" 
                              Height="50"
                              Foreground="White"
                              FontSize="14"
+                             Command="{Binding NavigateToCommand}"
+                             CommandParameter="{x:Static enums:NavigationPage.Search}"
                              Style="{StaticResource MenuButtonTheme}"/>
             </StackPanel>
 
@@ -64,45 +71,18 @@
                          VerticalAlignment="Center"
                          Grid.Column="0"
                          Style="{StaticResource TextboxTheme}"/>
-                <Button Content="🔍" Width="40" Height="40" 
+                <Button Content="🔍" 
+                        Width="40" 
+                        Height="40" 
                         VerticalAlignment="Top"
-                        Grid.Column="1"
+                        Grid.Column="1" 
                         Command="{Binding GetSearchedCryptocurrenciesCommand}"/>
+
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="1"
                   Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Text="Top 10"
-                           HorizontalAlignment="Center" VerticalAlignment="Top"
-                           Margin="0 15 0 0"
-                           Grid.Row="0" Grid.Column="0" 
-                           FontSize="18" Foreground="White" FontWeight="Bold" FontFamily="Comic Sans MS"/>
-                <ListView ItemsSource="{Binding TopCryptocurrencies}"
-                           SelectedItem="{Binding SelectedTopCryptocurrency, Mode=TwoWay}"
-                           HorizontalAlignment="Center" VerticalAlignment="Top"
-                           Margin="0 50 0 15"
-                           Grid.Row="0" Grid.Column="0"
-                           Grid.RowSpan="2">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Rank" DisplayMemberBinding="{Binding Rank}" Width="150"/>
-                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-
-                <Frame x:Name="BaseFrame" 
-                       Margin="15 15 15 15"
-                       Grid.RowSpan="2" Grid.Row="0" Grid.Column="1"/>
+                <Frame x:Name="BaseFrame" />
             </Grid>
 
            
@@ -113,6 +93,8 @@
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding GetAssetsCommand}" />
+            <i:InvokeCommandAction Command="{Binding NavigateToCommand}" 
+                                   CommandParameter="{x:Static enums:NavigationPage.Main}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

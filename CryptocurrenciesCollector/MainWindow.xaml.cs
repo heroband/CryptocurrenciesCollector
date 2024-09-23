@@ -29,43 +29,6 @@ namespace CryptocurrenciesCollector
         {
             InitializeComponent();
             DataContext = App.Current.ServicesProvider.GetRequiredService<MainViewModel>();
-            BaseFrame.Content = new DetailInformationPage();
         }
-
-
-        //private void NavigateToMainPage(object sender, RoutedEventArgs e)
-        //{
-        //    BaseFrame.NavigationService.Navigate(new MainPage());
-        //    if (sender is Button button)
-        //    {
-        //        UpdateButtonVisibility(button);
-        //    }
-        //}
-
-        //private void NavigateToDetailInformationPage(object sender, RoutedEventArgs e)
-        //{
-        //    BaseFrame.NavigationService.Navigate(new DetailInformationPage());
-        //    if (sender is Button button)
-        //    {
-        //        UpdateButtonVisibility(button);
-        //    }
-        //}
-
-        //private void NavigateToSearchPage(object sender, RoutedEventArgs e)
-        //{
-        //    BaseFrame.NavigationService.Navigate(new SearchPage());
-        //    if (sender is Button button)
-        //    {
-        //        UpdateButtonVisibility(button);
-        //    }
-        //}
-
-        //private void UpdateButtonVisibility(Button pressedButton)
-        //{
-        //    MainPageButton.Visibility = Visibility.Visible;
-        //    DetailInformationPageButton.Visibility = Visibility.Visible;
-
-        //    pressedButton.Visibility = Visibility.Hidden;
-        //}
     }
 }

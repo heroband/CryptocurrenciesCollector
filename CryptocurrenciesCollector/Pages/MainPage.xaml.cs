@@ -21,10 +21,10 @@ namespace CryptocurrenciesCollector.Pages
 {
     public partial class MainPage : Page
     {
-        public MainPage()
+        public MainPage(MainViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = App.Current.ServicesProvider.GetRequiredService<MainViewModel>();
+            DataContext = viewModel;
 
         }
     }

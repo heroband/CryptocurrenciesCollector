@@ -53,7 +53,12 @@
                         <GridViewColumn Header="MarketPrice" Width="75" DisplayMemberBinding="{Binding PriceUsd}">
                             <GridViewColumn.HeaderTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="MarketPrice" MouseLeftButtonDown="SortByMarketPrice"/>
+                                    <TextBlock Text="MarketPrice" Cursor="Hand">
+                                        <TextBlock.InputBindings>
+                                            <MouseBinding Gesture="LeftClick"
+                                                          Command="{Binding DataContext.SortByMarketPriceCommand, RelativeSource={RelativeSource AncestorType=Page}}"/>
+                                        </TextBlock.InputBindings>
+                                    </TextBlock>
                                 </DataTemplate>
                             </GridViewColumn.HeaderTemplate>
                         </GridViewColumn>

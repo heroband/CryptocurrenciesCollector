@@ -2,11 +2,14 @@
 using System.Data;
 using System.IO;
 using System.Windows;
+using CryptocurrenciesCollector.Models.Enums;
+using System.Windows.Controls;
 using CryptocurrenciesCollector.Models.Interfaces;
 using CryptocurrenciesCollector.Services;
 using CryptocurrenciesCollector.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using CryptocurrenciesCollector.Pages;
 
 namespace CryptocurrenciesCollector
 {
@@ -16,6 +19,7 @@ namespace CryptocurrenciesCollector
 
         public App()
         {
+            this.Activated += OnNavigationInitialization;
             var builder = new ConfigurationBuilder()
                .SetBasePath(Directory.GetCurrentDirectory())
                .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
@@ -34,8 +38,25 @@ namespace CryptocurrenciesCollector
                 new CryptocurrencyApiService(_configuration["ApiSettings:CoinCapApiKey"])
             );
             services.AddSingleton<MainViewModel>();
-            
+
+            services.AddSingleton<INavigationService, NavigationService>(provider =>
+            {
+                var mainWindow = (MainWindow)Application.Current.MainWindow;
+                return new NavigationService(mainWindow.BaseFrame);
+            });
+
             return services.BuildServiceProvider();
+        }
+
+        private void OnNavigationInitialization(object? sender, EventArgs e)
+        {
+            this.Activated -= OnNavigationInitialization;
+            var navigationService = ServicesProvider.GetRequiredService<INavigationService>();
+            var viewModel = ServicesProvider.GetRequiredService<MainViewModel>();
+
+            navigationService.AddNavigationPage(NavigationPage.Main, () => new MainPage(viewModel));
+            navigationService.AddNavigationPage(NavigationPage.DetailInformation, () => new DetailInformationPage(viewModel));
+            navigationService.AddNavigationPage(NavigationPage.Search, () => new SearchPage(viewModel));
         }
     }
 

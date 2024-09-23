@@ -25,34 +25,11 @@ namespace CryptocurrenciesCollector.Pages
     {
         private bool _isSortedAscending = true;
 
-        public DetailInformationPage()
+        public DetailInformationPage(MainViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = App.Current.ServicesProvider.GetRequiredService<MainViewModel>();
+            DataContext = viewModel;
         }
 
-        private void SortByMarketPrice(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is MainViewModel viewModel && viewModel.CryptocurrencyInfo != null)
-            {
-                var collectionView = CollectionViewSource.GetDefaultView(viewModel.CryptocurrencyInfo.Markets);
-                if (collectionView != null)
-                {
-                    collectionView.SortDescriptions.Clear();
-
-                    if (_isSortedAscending)
-                    {
-                        collectionView.SortDescriptions.Add(new SortDescription("PriceUsd", ListSortDirection.Ascending));
-                    }
-                    else
-                    {
-                        collectionView.SortDescriptions.Add(new SortDescription("PriceUsd", ListSortDirection.Descending));
-                    }
-
-                    _isSortedAscending = !_isSortedAscending;
-                    collectionView.Refresh();
-                }
-            }
-        }
     }
 }
