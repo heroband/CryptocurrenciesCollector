@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace CryptocurrenciesCollector.Services
             var assetJson = await assetResponse.Content.ReadAsStringAsync();
             var asset = JsonSerializer.Deserialize<AssetsWrap<CryptocurrencyDetailedData>>(assetJson);
 
-            var assetMarketsResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets/{id}/markets");
+            var assetMarketsResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets/{id}/markets?limit=2000");
             AssetsWrap<List<MarketPriceData>>? assetMarkets;
 
             if (assetMarketsResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -49,24 +50,24 @@ namespace CryptocurrenciesCollector.Services
             return asset.ToDetailedInfoCryptocurrency(assetMarkets);
         }
 
-        public async Task<List<TopCryptocurrencies>> GetTopAssets(int number)
+        public async Task<List<Cryptocurrency>> GetAssets(int limit)
         {
-            var assetsResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets?limit={number}");
+            var assetsResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets?limit={limit}");
             assetsResponse.EnsureSuccessStatusCode();
             var assetsJson = await assetsResponse.Content.ReadAsStringAsync();
-            var assets = JsonSerializer.Deserialize<AssetsWrap<List<TopCryptocurrenciesData>>>(assetsJson);
+            var assets = JsonSerializer.Deserialize<AssetsWrap<List<CryptocurrencyData>>>(assetsJson);
 
-            return assets.ToTopCryptocurrencies();
+            return assets.ToCryptocurrencies();
         }
 
-        public async Task<List<CryptocurrencySearchIInfo>> GetSearchedAssets(string search)
+        public async Task<List<Cryptocurrency>> GetSearchedAssets(string search, int limit)
         {
-            var assetsResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets?search={search}");
+            var assetsResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets?search={search}&limit={limit}");
             assetsResponse.EnsureSuccessStatusCode();
             var assetsJson = await assetsResponse.Content.ReadAsStringAsync();
-            var assets = JsonSerializer.Deserialize<AssetsWrap<List<CryptocurrencySearchData>>>(assetsJson);
+            var assets = JsonSerializer.Deserialize<AssetsWrap<List<CryptocurrencyData>>>(assetsJson);
 
-            return assets.ToShortInfoCryptocurrency();
+            return assets.ToCryptocurrencies();
         }
     }
 }

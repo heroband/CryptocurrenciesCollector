@@ -57,6 +57,7 @@ namespace CryptocurrenciesCollector
             navigationService.AddNavigationPage(NavigationPage.Main, () => new MainPage(viewModel));
             navigationService.AddNavigationPage(NavigationPage.DetailInformation, () => new DetailInformationPage(viewModel));
             navigationService.AddNavigationPage(NavigationPage.Search, () => new SearchPage(viewModel));
+            navigationService.AddNavigationPage(NavigationPage.Convert, () => new ConvertPage(viewModel));
         }
     }
 

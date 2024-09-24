@@ -21,28 +21,41 @@ namespace CryptocurrenciesCollector.ViewModels
         private readonly ICryptocurrencyApiService cryptoService;
         private readonly INavigationService navigationService;
 
-        [ObservableProperty]
-        private CryptocurrencyDetailedInfo? cryptocurrencyInfo;
+        const int topCryptocurrenciesNumber = 10;
+        const int assetsLimit = 2000;
+
 
         [ObservableProperty]
-        private TopCryptocurrencies? selectedTopCryptocurrency;
-
-        [ObservableProperty]
-        private CryptocurrencySearchIInfo? selectedSearchCryptocurrency;
-
-        [ObservableProperty]
-        private string? searchText;
-
-        public ObservableCollection<TopCryptocurrencies> TopCryptocurrencies { get; } = [];
-        const int maxTopCryptocurrencies = 10;
-
-        public ObservableCollection<CryptocurrencySearchIInfo> SearchedCryptocurrencies { get; } = [];
-
-        private bool _isSortedAscending = true;
+        private CryptocurrencyDetailedInfo cryptocurrencyInfo;
 
         [ObservableProperty]
         private bool hasMarkets = true;
 
+        [ObservableProperty]
+        private Cryptocurrency? selectedTopCryptocurrency;
+
+        [ObservableProperty]
+        private Cryptocurrency? selectedSearchCryptocurrency;
+
+        [ObservableProperty]
+        private string? searchText;
+
+        [ObservableProperty]
+        private double inputAmount;
+
+        [ObservableProperty]
+        private double outputAmount;
+
+        [ObservableProperty]
+        private Cryptocurrency convertFrom;
+
+        [ObservableProperty]
+        private Cryptocurrency convertTo;
+
+        public ObservableCollection<Cryptocurrency> SearchedCryptocurrencies { get; } = [];
+        public ObservableCollection<Cryptocurrency> Cryptocurrencies { get; } = [];
+
+        private bool _isSortedAscending = true;
 
         public MainViewModel(ICryptocurrencyApiService cryptoService, INavigationService navigationService)
         {
@@ -50,7 +63,7 @@ namespace CryptocurrenciesCollector.ViewModels
             this.navigationService = navigationService;
         }
 
-        async partial void OnSelectedTopCryptocurrencyChanged(TopCryptocurrencies? value)
+        async partial void OnSelectedTopCryptocurrencyChanged(Cryptocurrency? value)
         {
             if (value != null)
             {
@@ -58,7 +71,7 @@ namespace CryptocurrenciesCollector.ViewModels
             }
         }
 
-        async partial void OnSelectedSearchCryptocurrencyChanged(CryptocurrencySearchIInfo? value)
+        async partial void OnSelectedSearchCryptocurrencyChanged(Cryptocurrency? value)
         {
             if (value != null)
             {
@@ -66,23 +79,36 @@ namespace CryptocurrenciesCollector.ViewModels
             }
         }
 
-        private async Task GetCryptocurrencyById(string cryptocurrencyid)
+        private async Task GetCryptocurrencyById(string cryptocurrencyId)
         {
-            var cryptocurrency = await cryptoService.GetAssetById(cryptocurrencyid);
+            var cryptocurrency = await cryptoService.GetAssetById(cryptocurrencyId);
             CryptocurrencyInfo = cryptocurrency;
             HasMarkets = CryptocurrencyInfo.Markets != null;
             navigationService.NavigateTo(NavigationPage.DetailInformation);
         }
 
         [RelayCommand]
-        public async Task GetAssets()
+        public async Task GetTopAssets()
         {
-            var topCryptocurrencies = await cryptoService.GetTopAssets(maxTopCryptocurrencies);
-            TopCryptocurrencies.Clear();
+            var topCryptocurrencies = await cryptoService.GetAssets(topCryptocurrenciesNumber);
+            Cryptocurrencies.Clear();
             foreach (var cryptocurrency in topCryptocurrencies)
             {
-                TopCryptocurrencies.Add(cryptocurrency);
+                Cryptocurrencies.Add(cryptocurrency);
             }
+        }
+
+        [RelayCommand]
+        private async Task GetAllCryptocurrencies()
+        {
+            var cryptocurrencies = await cryptoService.GetAssets(assetsLimit);
+            Cryptocurrencies.Clear();
+            foreach (var cryptocurrency in cryptocurrencies)
+            {
+                Cryptocurrencies.Add(cryptocurrency);
+            }
+            ConvertFrom = Cryptocurrencies[0];
+            ConvertTo = Cryptocurrencies[0];
         }
 
         [RelayCommand]
@@ -90,7 +116,7 @@ namespace CryptocurrenciesCollector.ViewModels
         {
             if (!string.IsNullOrEmpty(SearchText))
             {
-                var allCryptocurrencies = await cryptoService.GetSearchedAssets(SearchText);
+                var allCryptocurrencies = await cryptoService.GetSearchedAssets(SearchText, assetsLimit);
 
                 SearchedCryptocurrencies.Clear();
                 foreach (var cryptocurrency in allCryptocurrencies)
@@ -98,7 +124,6 @@ namespace CryptocurrenciesCollector.ViewModels
                     SearchedCryptocurrencies.Add(cryptocurrency);
                 }
                 navigationService.NavigateTo(NavigationPage.Search);
-
             }
         }
 

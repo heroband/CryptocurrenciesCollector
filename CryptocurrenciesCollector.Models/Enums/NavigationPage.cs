@@ -10,6 +10,7 @@ namespace CryptocurrenciesCollector.Models.Enums
     {
         Main,
         DetailInformation,
-        Search
+        Search,
+        Convert
     }
 }

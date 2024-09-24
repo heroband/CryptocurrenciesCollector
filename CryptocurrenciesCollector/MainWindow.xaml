@@ -48,13 +48,20 @@
                              FontSize="14"
                              Command="{Binding NavigateToCommand}"
                              CommandParameter="{x:Static enums:NavigationPage.DetailInformation}"
-                             Style="{StaticResource MenuButtonTheme}"/>     
+                             Style="{StaticResource MenuButtonTheme}"/>
                 <RadioButton Content="Search" 
                              Height="50"
                              Foreground="White"
                              FontSize="14"
                              Command="{Binding NavigateToCommand}"
                              CommandParameter="{x:Static enums:NavigationPage.Search}"
+                             Style="{StaticResource MenuButtonTheme}"/>
+                <RadioButton Content="Convert" 
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Command="{Binding NavigateToCommand}"
+                             CommandParameter="{x:Static enums:NavigationPage.Convert}"
                              Style="{StaticResource MenuButtonTheme}"/>
             </StackPanel>
 
@@ -85,17 +92,12 @@
                 <Frame x:Name="BaseFrame" />
             </Grid>
 
-           
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding NavigateToCommand}" 
+                           CommandParameter="{x:Static enums:NavigationPage.Main}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </Grid>
     </Border>
-    
-
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding GetAssetsCommand}" />
-            <i:InvokeCommandAction Command="{Binding NavigateToCommand}" 
-                                   CommandParameter="{x:Static enums:NavigationPage.Main}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
-
 </Window>

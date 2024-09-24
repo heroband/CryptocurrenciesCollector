@@ -7,13 +7,17 @@ using System.Threading.Tasks;
 
 namespace CryptocurrenciesCollector.Models.Responses
 {
-    public class TopCryptocurrenciesData
+    public class CryptocurrencyData
     {
         [JsonPropertyName("id")]
         public required string Id { get; init; }
-        [JsonPropertyName("name")]
-        public required string Name { get; init; }
         [JsonPropertyName("rank")]
         public required string Rank { get; init; }
+        [JsonPropertyName("name")]
+        public required string Name { get; init; }
+        [JsonPropertyName("priceUsd")]
+        public string? PriceUsd { get; init; }
+        [JsonPropertyName("changePercent24Hr")]
+        public string? ChangePercent24Hr { get; init; }
     }
 }

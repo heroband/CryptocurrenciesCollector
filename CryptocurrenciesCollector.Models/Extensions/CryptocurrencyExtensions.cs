@@ -29,25 +29,13 @@ namespace CryptocurrenciesCollector.Models.Extensions
             };
         }
 
-        public static List<TopCryptocurrencies> ToTopCryptocurrencies(this AssetsWrap<List<TopCryptocurrenciesData>> assets)
+        public static List<Cryptocurrency> ToCryptocurrencies(this AssetsWrap<List<CryptocurrencyData>> assets)
         {
             return assets.Data
-                .Select(asset => new TopCryptocurrencies
+                .Select(asset => new Cryptocurrency
                 {
                     Id = asset.Id,
-                    Name = asset.Name,
-                    Rank = int.Parse(asset.Rank)
-                })
-                .ToList();
-        }
-
-        public static List<CryptocurrencySearchIInfo> ToShortInfoCryptocurrency(this AssetsWrap<List<CryptocurrencySearchData>> assets)
-        {
-            return assets.Data
-                .Select(asset => new CryptocurrencySearchIInfo
-                {
-                
-                    Id = asset.Id,
+                    Rank = int.Parse(asset.Rank),
                     Name = asset.Name,
                     PriceUsd = decimal.TryParse(asset.PriceUsd, CultureInfo.InvariantCulture, out decimal price) ? price : 0,
                     ChangePercent24Hr = decimal.TryParse(asset.ChangePercent24Hr, CultureInfo.InvariantCulture, out decimal change) ? change : 0

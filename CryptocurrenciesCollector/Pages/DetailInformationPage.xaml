@@ -20,9 +20,9 @@
 
             <TextBlock Text="Cryptocurrency detail information"
                        Foreground="White"
-           HorizontalAlignment="Left" VerticalAlignment="Top"
-           Grid.Row="0" Grid.Column="0" 
-           FontSize="18" FontWeight="Bold" FontFamily="Comic Sans MS"/>
+                       HorizontalAlignment="Left" VerticalAlignment="Top"
+                       Grid.Row="0" Grid.Column="0" 
+                       FontSize="18" FontWeight="Bold" FontFamily="Comic Sans MS"/>
 
             <Grid Margin="0 30 0 0">
                 <Grid.ColumnDefinitions>

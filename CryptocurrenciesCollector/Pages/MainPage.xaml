@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
@@ -13,7 +14,7 @@
            Margin="0 15 0 0"
            Grid.Row="0" Grid.Column="0" 
            FontSize="18" Foreground="White" FontWeight="Bold" FontFamily="Comic Sans MS"/>
-        <ListView ItemsSource="{Binding TopCryptocurrencies}"
+        <ListView ItemsSource="{Binding Cryptocurrencies}"
            SelectedItem="{Binding SelectedTopCryptocurrency, Mode=TwoWay}"
            HorizontalAlignment="Center" VerticalAlignment="Top"
            Margin="0 50 0 15"
@@ -27,4 +28,11 @@
             </ListView.View>
         </ListView>
     </Grid>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding GetTopAssetsCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
 </Page>
