@@ -40,6 +40,9 @@ namespace CryptocurrenciesCollector.ViewModels
 
         private bool _isSortedAscending = true;
 
+        [ObservableProperty]
+        private bool hasMarkets = true;
+
 
         public MainViewModel(ICryptocurrencyApiService cryptoService, INavigationService navigationService)
         {
@@ -67,6 +70,7 @@ namespace CryptocurrenciesCollector.ViewModels
         {
             var cryptocurrency = await cryptoService.GetAssetById(cryptocurrencyid);
             CryptocurrencyInfo = cryptocurrency;
+            HasMarkets = CryptocurrencyInfo.Markets != null;
             navigationService.NavigateTo(NavigationPage.DetailInformation);
         }
 

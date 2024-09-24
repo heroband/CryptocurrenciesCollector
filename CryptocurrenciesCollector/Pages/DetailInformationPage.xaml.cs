@@ -18,9 +18,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CryptocurrenciesCollector.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для DetailInformationPage.xaml
-    /// </summary>
     public partial class DetailInformationPage : Page
     {
         private bool _isSortedAscending = true;

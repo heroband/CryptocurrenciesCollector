@@ -11,19 +11,15 @@ namespace CryptocurrenciesCollector.Models.Extensions
 {
     public static class CryptocurrencyExtensions
     {
-        public static CryptocurrencyDetailedInfo ToDetailedInfoCryptocurrency(this AssetsWrap<CryptocurrencyDetailedData> asset, AssetsWrap<List<MarketPriceData>> assetMarkets)
+        public static CryptocurrencyDetailedInfo ToDetailedInfoCryptocurrency(this AssetsWrap<CryptocurrencyDetailedData> asset, AssetsWrap<List<MarketPriceData>>? assetMarkets)
         {
             return new CryptocurrencyDetailedInfo
             {
                 Name = asset.Data.Name,
                 PriceUsd = decimal.Parse(asset.Data.PriceUsd, CultureInfo.InvariantCulture),
-                ChangePercent24Hr = string.IsNullOrEmpty(asset.Data.ChangePercent24Hr)
-                                        ? 0 
-                                        : decimal.Parse(asset.Data.ChangePercent24Hr, CultureInfo.InvariantCulture),
-                VolumeUsd24Hr = string.IsNullOrEmpty(asset.Data.VolumeUsd24Hr)
-                                    ? 0
-                                    : decimal.Parse(asset.Data.VolumeUsd24Hr, CultureInfo.InvariantCulture),
-                Markets = assetMarkets.Data
+                ChangePercent24Hr = decimal.TryParse(asset.Data.ChangePercent24Hr, CultureInfo.InvariantCulture, out decimal change) ? change : 0,
+                VolumeUsd24Hr = decimal.TryParse(asset.Data.VolumeUsd24Hr, CultureInfo.InvariantCulture, out decimal volume) ? volume : 0,
+                Markets = assetMarkets?.Data
                     .Select(m => new MarketPrice
                     {
                         ExchangeId = m.ExchangeId,
@@ -45,8 +41,6 @@ namespace CryptocurrenciesCollector.Models.Extensions
                 .ToList();
         }
 
-
-
         public static List<CryptocurrencySearchIInfo> ToShortInfoCryptocurrency(this AssetsWrap<List<CryptocurrencySearchData>> assets)
         {
             return assets.Data
@@ -55,12 +49,8 @@ namespace CryptocurrenciesCollector.Models.Extensions
                 
                     Id = asset.Id,
                     Name = asset.Name,
-                    PriceUsd = string.IsNullOrEmpty(asset.PriceUsd) 
-                                   ? 0 
-                                   : decimal.Parse(asset.PriceUsd, CultureInfo.InvariantCulture),
-                    ChangePercent24Hr = string.IsNullOrEmpty(asset.ChangePercent24Hr)
-                                            ? 0
-                                            : decimal.Parse(asset.ChangePercent24Hr, CultureInfo.InvariantCulture)
+                    PriceUsd = decimal.TryParse(asset.PriceUsd, CultureInfo.InvariantCulture, out decimal price) ? price : 0,
+                    ChangePercent24Hr = decimal.TryParse(asset.ChangePercent24Hr, CultureInfo.InvariantCulture, out decimal change) ? change : 0
                 })
                 .ToList();
         }

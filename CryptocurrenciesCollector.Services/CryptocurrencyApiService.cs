@@ -34,10 +34,18 @@ namespace CryptocurrenciesCollector.Services
             var asset = JsonSerializer.Deserialize<AssetsWrap<CryptocurrencyDetailedData>>(assetJson);
 
             var assetMarketsResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets/{id}/markets");
-            assetMarketsResponse.EnsureSuccessStatusCode();
-            var assetMarketsJson = await assetMarketsResponse.Content.ReadAsStringAsync();
-            var assetMarkets = JsonSerializer.Deserialize<AssetsWrap<List<MarketPriceData>>>(assetMarketsJson);
+            AssetsWrap<List<MarketPriceData>>? assetMarkets;
 
+            if (assetMarketsResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                assetMarkets = null;
+            }
+            else 
+            {
+                var assetMarketsJson = await assetMarketsResponse.Content.ReadAsStringAsync();
+                assetMarkets = JsonSerializer.Deserialize<AssetsWrap<List<MarketPriceData>>>(assetMarketsJson);
+            }
+            
             return asset.ToDetailedInfoCryptocurrency(assetMarkets);
         }
 
