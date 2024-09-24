@@ -13,6 +13,10 @@ using System.Windows.Media;
 using CryptocurrenciesCollector.Models.Enums;
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Windows.Input;
+using System.Reflection;
 
 namespace CryptocurrenciesCollector.ViewModels
 {
@@ -41,16 +45,16 @@ namespace CryptocurrenciesCollector.ViewModels
         private string? searchText;
 
         [ObservableProperty]
-        private double inputAmount;
+        private string? inputAmount;
 
         [ObservableProperty]
-        private double outputAmount;
+        private string? outputAmount;
 
         [ObservableProperty]
-        private Cryptocurrency convertFrom;
+        private Cryptocurrency convertFromCryptocurrency;
 
         [ObservableProperty]
-        private Cryptocurrency convertTo;
+        private Cryptocurrency convertToCryptocurrency;
 
         public ObservableCollection<Cryptocurrency> SearchedCryptocurrencies { get; } = [];
         public ObservableCollection<Cryptocurrency> Cryptocurrencies { get; } = [];
@@ -101,14 +105,18 @@ namespace CryptocurrenciesCollector.ViewModels
         [RelayCommand]
         private async Task GetAllCryptocurrencies()
         {
-            var cryptocurrencies = await cryptoService.GetAssets(assetsLimit);
             Cryptocurrencies.Clear();
+            InputAmount = OutputAmount = default;
+            var cryptocurrencies = await cryptoService.GetAssets(assetsLimit);
             foreach (var cryptocurrency in cryptocurrencies)
             {
-                Cryptocurrencies.Add(cryptocurrency);
+                if (cryptocurrency.PriceUsd != 0)
+                {
+                    Cryptocurrencies.Add(cryptocurrency);
+                }
             }
-            ConvertFrom = Cryptocurrencies[0];
-            ConvertTo = Cryptocurrencies[0];
+            ConvertFromCryptocurrency = Cryptocurrencies[0];
+            ConvertToCryptocurrency = Cryptocurrencies[0];
         }
 
         [RelayCommand]
@@ -155,6 +163,41 @@ namespace CryptocurrenciesCollector.ViewModels
                     _isSortedAscending = !_isSortedAscending;
                     collectionView.Refresh();
                 }
+            }
+        }
+
+        [RelayCommand]
+        private void ConvertCurrency()
+        {
+            if (decimal.TryParse(InputAmount, CultureInfo.InvariantCulture, out var inputValue))
+            {
+                var fromPriceUsd = ConvertFromCryptocurrency.PriceUsd;
+                var toPriceUsd = ConvertToCryptocurrency.PriceUsd;
+                OutputAmount = ((inputValue * fromPriceUsd) / toPriceUsd).ToString(CultureInfo.InvariantCulture);
+            }
+        }
+
+        partial void OnInputAmountChanged(string? oldValue, string? newValue)
+        {
+            if (ConvertFromCryptocurrency != null && ConvertToCryptocurrency != null)
+            {
+                ConvertCurrency();
+            }
+        }
+
+        partial void OnConvertFromCryptocurrencyChanged(Cryptocurrency value)
+        {
+            if (value != null && ConvertToCryptocurrency != null)
+            {
+                ConvertCurrency();
+            }
+        }
+
+        partial void OnConvertToCryptocurrencyChanged(Cryptocurrency value)
+        {
+            if (value != null && ConvertFromCryptocurrency != null)
+            {
+                ConvertCurrency();
             }
         }
 

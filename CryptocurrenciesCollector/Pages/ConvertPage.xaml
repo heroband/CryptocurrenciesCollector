@@ -11,39 +11,37 @@
 
     <Grid>
         <TextBox x:Name="InputAmount" 
+                 Text="{Binding InputAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  HorizontalAlignment="Left" 
                  VerticalAlignment="Top" 
                  Width="120" 
-                 Height="30"/>
+                 Height="30"
+                 PreviewTextInput="NumberValidationTextBox"/>
 
         <ComboBox x:Name="FromCurrencyComboBox" 
                   ItemsSource="{Binding Cryptocurrencies}"
                   DisplayMemberPath="Id"
-                  SelectedItem="{Binding ConvertFrom}" 
+                  SelectedItem="{Binding ConvertFromCryptocurrency}" 
                   HorizontalAlignment="Left" 
                   VerticalAlignment="Top" 
                   Width="120" 
                   Height="30"
                   Margin="130 0 0 0"/>
 
-        <Button Content="🔍" 
-                Width="30" 
-                Height="30" 
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Top"
-                Margin="260 0 0 0"/>
 
         <TextBox x:Name="OutputAmount" 
+                 Text="{Binding OutputAmount, Mode=TwoWay}"
                  HorizontalAlignment="Left" 
                  VerticalAlignment="Top" 
                  Width="120" 
                  Height="30"
-                 Margin="300 0 0 0"/>
+                 Margin="300 0 0 0"
+                 PreviewTextInput="NumberValidationTextBox"/>
 
         <ComboBox x:Name="ToCurrencyComboBox" 
                   ItemsSource="{Binding Cryptocurrencies}"
                   DisplayMemberPath="Id"
-                  SelectedItem="{Binding ConvertTo}"
+                  SelectedItem="{Binding ConvertToCryptocurrency}"
                   HorizontalAlignment="Left" 
                   VerticalAlignment="Top" 
                   Width="120" 
