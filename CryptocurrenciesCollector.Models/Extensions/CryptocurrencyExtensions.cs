@@ -16,7 +16,7 @@ namespace CryptocurrenciesCollector.Models.Extensions
             return new CryptocurrencyDetailedInfo
             {
                 Name = asset.Data.Name,
-                PriceUsd = decimal.Parse(asset.Data.PriceUsd, CultureInfo.InvariantCulture),
+                PriceUsd = decimal.TryParse(asset.Data.PriceUsd, CultureInfo.InvariantCulture, out decimal price) ? price : 0,
                 ChangePercent24Hr = decimal.TryParse(asset.Data.ChangePercent24Hr, CultureInfo.InvariantCulture, out decimal change) ? change : 0,
                 VolumeUsd24Hr = decimal.TryParse(asset.Data.VolumeUsd24Hr, CultureInfo.InvariantCulture, out decimal volume) ? volume : 0,
                 Markets = assetMarkets?.Data

@@ -200,6 +200,7 @@ namespace CryptocurrenciesCollector.ViewModels
 
         partial void OnConvertFromCryptocurrencyChanged(Cryptocurrency value)
         {
+            IsCurrencyConvertAvailable = false;
             if (value != null && Cryptocurrencies.Contains(value) && ConvertToCryptocurrency != null)
             {
                 IsCurrencyConvertAvailable = true;
@@ -213,9 +214,15 @@ namespace CryptocurrenciesCollector.ViewModels
 
         partial void OnConvertToCryptocurrencyChanged(Cryptocurrency value)
         {
-            if (value != null && ConvertFromCryptocurrency != null)
+            IsCurrencyConvertAvailable = false;
+            if (value != null && Cryptocurrencies.Contains(value) && ConvertFromCryptocurrency != null)
             {
+                IsCurrencyConvertAvailable = true;
                 ConvertCurrency();
+            }
+            else
+            {
+                IsCurrencyConvertAvailable = false;
             }
         }
 

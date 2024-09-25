@@ -45,6 +45,8 @@
                             SelectedItem="{Binding ConvertToCryptocurrency}"
                             HorizontalAlignment="Left" 
                             VerticalAlignment="Top" 
+                            IsEditable="True"
+                            IsTextSearchEnabled="True"
                             Width="120" 
                             Height="30"
                             Margin="10,0,0,0"/>
