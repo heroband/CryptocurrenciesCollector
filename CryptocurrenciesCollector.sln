@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptocurrenciesCollector", "CryptocurrenciesCollector\CryptocurrenciesCollector.csproj", "{605BEAAB-0B72-49CA-B20D-D61D0236DB8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptocurrenciesCollector", "CryptocurrenciesCollector\CryptocurrenciesCollector.csproj", "{605BEAAB-0B72-49CA-B20D-D61D0236DB8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptocurrenciesCollector.Models", "CryptocurrenciesCollector.Models\CryptocurrenciesCollector.Models.csproj", "{CDF66344-E97B-44FC-AA1C-FEA0493F7C40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptocurrenciesCollector.Models", "CryptocurrenciesCollector.Models\CryptocurrenciesCollector.Models.csproj", "{CDF66344-E97B-44FC-AA1C-FEA0493F7C40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptocurrenciesCollector.Services", "CryptocurrenciesCollector.Services\CryptocurrenciesCollector.Services.csproj", "{A85EACC0-2D0D-4590-892A-255AFEA7C977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptocurrenciesCollector.Services", "CryptocurrenciesCollector.Services\CryptocurrenciesCollector.Services.csproj", "{A85EACC0-2D0D-4590-892A-255AFEA7C977}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptocurrenciesCollector.ViewModels", "CryptocurrenciesCollector.ViewModels\CryptocurrenciesCollector.ViewModels.csproj", "{1FE41AED-266E-4B54-A852-07E5EA204BB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptocurrenciesCollector.ViewModels", "CryptocurrenciesCollector.ViewModels\CryptocurrenciesCollector.ViewModels.csproj", "{1FE41AED-266E-4B54-A852-07E5EA204BB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptocurrenciesCollector.Helpers", "CryptocurrenciesCollector.Helpers\CryptocurrenciesCollector.Helpers.csproj", "{5C443B3B-0434-4274-A794-70EEBBD8EE7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1FE41AED-266E-4B54-A852-07E5EA204BB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FE41AED-266E-4B54-A852-07E5EA204BB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FE41AED-266E-4B54-A852-07E5EA204BB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C443B3B-0434-4274-A794-70EEBBD8EE7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C443B3B-0434-4274-A794-70EEBBD8EE7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C443B3B-0434-4274-A794-70EEBBD8EE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C443B3B-0434-4274-A794-70EEBBD8EE7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

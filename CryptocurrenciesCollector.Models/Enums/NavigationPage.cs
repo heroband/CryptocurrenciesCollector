@@ -11,6 +11,7 @@ namespace CryptocurrenciesCollector.Models.Enums
         Main,
         DetailInformation,
         Search,
-        Convert
+        Convert,
+        Settings
     }
 }

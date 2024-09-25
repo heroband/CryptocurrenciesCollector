@@ -9,7 +9,8 @@ namespace CryptocurrenciesCollector.Models.Interfaces
     public interface ICryptocurrencyApiService
     {
         Task<CryptocurrencyDetailedInfo> GetAssetById(string id);
+        Task<List<Cryptocurrency>> GetAssets();
         Task<List<Cryptocurrency>> GetAssets(int limit);
-        Task<List<Cryptocurrency>> GetSearchedAssets(string search, int limit);
+        Task<List<Cryptocurrency>> GetSearchedAssets(string search);
     }
 }

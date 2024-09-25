@@ -26,8 +26,6 @@ namespace CryptocurrenciesCollector.ViewModels
         private readonly INavigationService navigationService;
 
         const int topCryptocurrenciesNumber = 10;
-        const int assetsLimit = 2000;
-
 
         [ObservableProperty]
         private CryptocurrencyDetailedInfo cryptocurrencyInfo;
@@ -55,6 +53,9 @@ namespace CryptocurrenciesCollector.ViewModels
 
         [ObservableProperty]
         private Cryptocurrency convertToCryptocurrency;
+       
+        [ObservableProperty]
+        private bool isCurrencyConvertAvailable;
 
         public ObservableCollection<Cryptocurrency> SearchedCryptocurrencies { get; } = [];
         public ObservableCollection<Cryptocurrency> Cryptocurrencies { get; } = [];
@@ -107,7 +108,7 @@ namespace CryptocurrenciesCollector.ViewModels
         {
             Cryptocurrencies.Clear();
             InputAmount = OutputAmount = default;
-            var cryptocurrencies = await cryptoService.GetAssets(assetsLimit);
+            var cryptocurrencies = await cryptoService.GetAssets();
             foreach (var cryptocurrency in cryptocurrencies)
             {
                 if (cryptocurrency.PriceUsd != 0)
@@ -115,8 +116,10 @@ namespace CryptocurrenciesCollector.ViewModels
                     Cryptocurrencies.Add(cryptocurrency);
                 }
             }
+            InputAmount = "1";
             ConvertFromCryptocurrency = Cryptocurrencies[0];
             ConvertToCryptocurrency = Cryptocurrencies[0];
+            IsCurrencyConvertAvailable = true;
         }
 
         [RelayCommand]
@@ -124,7 +127,7 @@ namespace CryptocurrenciesCollector.ViewModels
         {
             if (!string.IsNullOrEmpty(SearchText))
             {
-                var allCryptocurrencies = await cryptoService.GetSearchedAssets(SearchText, assetsLimit);
+                var allCryptocurrencies = await cryptoService.GetSearchedAssets(SearchText);
 
                 SearchedCryptocurrencies.Clear();
                 foreach (var cryptocurrency in allCryptocurrencies)
@@ -173,7 +176,17 @@ namespace CryptocurrenciesCollector.ViewModels
             {
                 var fromPriceUsd = ConvertFromCryptocurrency.PriceUsd;
                 var toPriceUsd = ConvertToCryptocurrency.PriceUsd;
-                OutputAmount = ((inputValue * fromPriceUsd) / toPriceUsd).ToString(CultureInfo.InvariantCulture);
+                try
+                {
+                    OutputAmount = ((inputValue * fromPriceUsd) / toPriceUsd).ToString(CultureInfo.InvariantCulture);
+                }
+                catch (OverflowException) {
+                    MessageBox.Show("The entered value is too large to convert.",
+                                "Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+                    OutputAmount = null;
+                }
             }
         }
 
@@ -187,9 +200,14 @@ namespace CryptocurrenciesCollector.ViewModels
 
         partial void OnConvertFromCryptocurrencyChanged(Cryptocurrency value)
         {
-            if (value != null && ConvertToCryptocurrency != null)
+            if (value != null && Cryptocurrencies.Contains(value) && ConvertToCryptocurrency != null)
             {
+                IsCurrencyConvertAvailable = true;
                 ConvertCurrency();
+            }
+            else
+            {
+                IsCurrencyConvertAvailable = false;
             }
         }
 

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CryptocurrenciesCollector.Helpers\CryptocurrenciesCollector.Helpers.csproj" />
     <ProjectReference Include="..\CryptocurrenciesCollector.Services\CryptocurrenciesCollector.Services.csproj" />
     <ProjectReference Include="..\CryptocurrenciesCollector.ViewModels\CryptocurrenciesCollector.ViewModels.csproj" />
   </ItemGroup>
