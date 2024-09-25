@@ -12,78 +12,85 @@
         Height="600" Width="920"
         Background="Transparent">
 
-    
-    
-    <Border Background="#272537"
-            CornerRadius="30">
+
+    <Border Background="{DynamicResource Backdrop}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="90"/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Cryptocurrencies"
+            <Border Grid.RowSpan="2" Background="{DynamicResource Card}"/>
+
+            <TextBlock Grid.Row="0"
+                       Margin="10 0"
+                       Text="Cryptocurrencies"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"
-                       Margin="20 0 0 0"
                        FontSize="22"
                        FontFamily="Comic Sans MS"
-                       Foreground="White"/>
+                       Foreground="{DynamicResource Text}"/>
 
-            <StackPanel Grid.Row="1">
-                <RadioButton Content="Home" 
-                             IsChecked="True"
-                             Height="50"
-                             Foreground="White"
-                             FontSize="14"
-                             Command="{Binding NavigateToCommand}"
-                             CommandParameter="{x:Static enums:NavigationPage.Main}"
-                             Style="{StaticResource MenuButtonTheme}"/>
-                <RadioButton Content="Convert" 
-                             Height="50"
-                             Foreground="White"
-                             FontSize="14"
-                             Command="{Binding NavigateToCommand}"
-                             CommandParameter="{x:Static enums:NavigationPage.Convert}"
-                             Style="{StaticResource MenuButtonTheme}"/>
-                <RadioButton Content="Settings" 
-                             Height="50"
-                             Foreground="White"
-                             FontSize="14"
-                             Command="{Binding NavigateToCommand}"
-                             CommandParameter="{x:Static enums:NavigationPage.Settings}"
-                             Style="{StaticResource MenuButtonTheme}"/>
-            </StackPanel>
-
-            <Grid Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <TextBox Text="{Binding SearchText}"
-                         Height="40"
-                         Width="250"
-                         HorizontalAlignment = "Left"
-                         VerticalAlignment="Center"
-                         Grid.Column="0"
-                         Style="{StaticResource TextboxTheme}"/>
-                <Button Content="🔍" 
-                        Width="40" 
-                        Height="40" 
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Left"
-                        Grid.Column="1" 
-                        Command="{Binding GetSearchedCryptocurrenciesCommand}"/>
+            <Grid Grid.Row="1">
+                <StackPanel Grid.Row="1">
+                    <RadioButton Content="Home" 
+                                 IsChecked="True"
+                                 Height="50"
+                                 HorizontalAlignment="Stretch"
+                                 Foreground="{DynamicResource Text}"
+                                 FontSize="14"
+                                 Command="{Binding NavigateToCommand}"
+                                 CommandParameter="{x:Static enums:NavigationPage.Main}"
+                                 Style="{StaticResource MenuButtonStyle}"/>
+                    <RadioButton Content="Convert" 
+                                 Height="50"
+                                 HorizontalAlignment="Stretch"
+                                 Foreground="{DynamicResource Text}" 
+                                 FontSize="14"
+                                 Command="{Binding NavigateToCommand}" 
+                                 CommandParameter="{x:Static enums:NavigationPage.Convert}"
+                                 Style="{StaticResource MenuButtonStyle}"/>
+                    <RadioButton Content="Settings" 
+                                 Height="50"
+                                 HorizontalAlignment="Stretch"
+                                 Foreground="{DynamicResource Text}"
+                                 FontSize="14"
+                                 Command="{Binding NavigateToCommand}"
+                                 CommandParameter="{x:Static enums:NavigationPage.Settings}"
+                                 Style="{StaticResource MenuButtonStyle}"/>
+                </StackPanel>
             </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="1"
-                  Margin="10">
+            <Grid Grid.Column="1" Margin="30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+
+                    <Button Content="🔍" 
+                            Background="{DynamicResource Card}"
+                            Foreground="{DynamicResource Text}"
+                            Grid.Column="0"
+                            Width="40" 
+                            Height="40" 
+                            HorizontalAlignment="Left"
+                            Command="{Binding GetSearchedCryptocurrenciesCommand}"/>
+                    <TextBox Grid.Column="1"
+                             Text="{Binding SearchText}"
+                             Height="40"
+                             HorizontalAlignment = "Stretch"
+                             VerticalAlignment="Center"
+                             Style="{StaticResource TextboxStyle}"/>    
+            </Grid>
+                
+            <Grid Grid.Row="1" Grid.Column="1">
                 <Frame x:Name="BaseFrame"
+                       Margin="10 0"
                        NavigationUIVisibility="Hidden"/>
             </Grid>
 

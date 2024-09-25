@@ -8,7 +8,9 @@
       Title="DetailInformationPage">
 
     <Page.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        </ResourceDictionary>
     </Page.Resources>
 
     <Grid>
@@ -19,10 +21,14 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Cryptocurrency detail information"
-                       Foreground="White"
-                       HorizontalAlignment="Left" VerticalAlignment="Top"
-                       Grid.Row="0" Grid.Column="0" 
-                       FontSize="18" FontWeight="Bold" FontFamily="Comic Sans MS"/>
+                       Foreground="{DynamicResource Text}"
+                       HorizontalAlignment="Left" 
+                       VerticalAlignment="Top"
+                       Grid.Row="0" 
+                       Grid.Column="0" 
+                       FontSize="18" 
+                       FontWeight="Bold" 
+                       FontFamily="Comic Sans MS"/>
 
             <Grid Margin="0 30 0 0">
                 <Grid.ColumnDefinitions>
@@ -36,15 +42,51 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Name " Foreground="White" Grid.Column="0" Grid.Row="0" FontWeight="Bold" HorizontalAlignment="Left"/>
-                <TextBlock Text="Price (USD) " Foreground="White" Grid.Column="0" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Left"/>
-                <TextBlock Text="Volume (24Hr) " Foreground="White" Grid.Column="0" Grid.Row="2" FontWeight="Bold" HorizontalAlignment="Left"/>
-                <TextBlock Text="Change (24Hr%) " Foreground="White" Grid.Column="0" Grid.Row="3" FontWeight="Bold" HorizontalAlignment="Left"/>
+                <TextBlock Text="Name " 
+                           Foreground="{DynamicResource Text}" 
+                           Grid.Column="0" 
+                           Grid.Row="0" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Left"/>
+                <TextBlock Text="Price (USD) " 
+                           Foreground="{DynamicResource Text}" 
+                           Grid.Column="0" 
+                           Grid.Row="1" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Left"/>
+                <TextBlock Text="Volume (24Hr) " 
+                           Foreground="{DynamicResource Text}" 
+                           Grid.Column="0" 
+                           Grid.Row="2" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Left"/>
+                <TextBlock Text="Change (24Hr%) " 
+                           Foreground="{DynamicResource Text}" 
+                           Grid.Column="0" 
+                           Grid.Row="3" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Left"/>
 
-                <TextBlock Text="{Binding CryptocurrencyInfo.Name}" Foreground="White" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left"/>
-                <TextBlock Text="{Binding CryptocurrencyInfo.PriceUsd}" Foreground="White" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"/>
-                <TextBlock Text="{Binding CryptocurrencyInfo.VolumeUsd24Hr}" Foreground="White" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left"/>
-                <TextBlock Text="{Binding CryptocurrencyInfo.ChangePercent24Hr}" Foreground="White" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding CryptocurrencyInfo.Name}" 
+                           Foreground="{DynamicResource Text}"
+                           Grid.Column="1" 
+                           Grid.Row="0" 
+                           HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding CryptocurrencyInfo.PriceUsd}"
+                           Foreground="{DynamicResource Text}" 
+                           Grid.Column="1" 
+                           Grid.Row="1" 
+                           HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding CryptocurrencyInfo.VolumeUsd24Hr}" 
+                           Foreground="{DynamicResource Text}" 
+                           Grid.Column="1" 
+                           Grid.Row="2" 
+                           HorizontalAlignment="Left"/>
+                <TextBlock Text="{Binding CryptocurrencyInfo.ChangePercent24Hr}" 
+                           Foreground="{DynamicResource Text}" 
+                           Grid.Column="1" 
+                           Grid.Row="3" 
+                           HorizontalAlignment="Left"/>
             </Grid>
 
             <TextBlock Text="No markets available" 

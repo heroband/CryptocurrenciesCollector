@@ -6,9 +6,11 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Theme/MenuButtonTheme.xaml"/>
-                <ResourceDictionary Source="Theme/TextboxTheme.xaml"/>
-                <ResourceDictionary Source="Theme/SettingsMenuButtonTheme.xaml"/>
+                <ResourceDictionary Source="Themes/MenuButtonStyle.xaml"/>
+                <ResourceDictionary Source="Themes/TextboxStyle.xaml"/>
+                <ResourceDictionary Source="Themes/SettingsMenuButtonStyle.xaml"/>
+                <ResourceDictionary Source="Themes/LightTheme.xaml"/>
+                <ResourceDictionary Source="Themes/DarkTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

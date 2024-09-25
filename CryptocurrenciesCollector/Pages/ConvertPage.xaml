@@ -17,7 +17,7 @@
                        Grid.Row="0"
                        Grid.Column="0"
                        Text="{Binding InputAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                       HorizontalAlignment="Left" 
+                       HorizontalAlignment="Center" 
                        VerticalAlignment="Top" 
                        Height="30"
                        Width="120">
@@ -27,7 +27,7 @@
                 </i:Interaction.Behaviors>
             </TextBox>
 
-            <StackPanel Orientation="Horizontal" 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                         Margin="0 10 0 0">
                 <ComboBox x:Name="FromCurrencyComboBox" 
                             ItemsSource="{Binding Cryptocurrencies}"
@@ -56,7 +56,7 @@
             <TextBlock Text="Такой криптовалюты нет" 
                    Foreground="Red"
                    FontWeight="Bold" 
-                   HorizontalAlignment="Left" 
+                   HorizontalAlignment="Center" 
                    VerticalAlignment="Top" 
                    Margin="0 10 0 0">
                 <TextBlock.Style>
@@ -72,7 +72,7 @@
             </TextBlock>
 
 
-            <StackPanel Orientation="Horizontal" 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                         Margin="0 10 0 0">
                 <StackPanel.Style>
                     <Style TargetType="StackPanel">
@@ -85,29 +85,29 @@
                     </Style>
                 </StackPanel.Style>
                 <TextBlock FontSize="18" 
-                           Foreground="White" 
+                           Foreground="{DynamicResource Text}" 
                            FontWeight="Bold" 
                            FontFamily="Comic Sans MS"
                            Text="{Binding InputAmount, Mode=TwoWay}"/>
                 <TextBlock FontSize="18" 
-                           Foreground="White" 
+                           Foreground="{DynamicResource Text}" 
                            FontWeight="Bold" 
                            FontFamily="Comic Sans MS"
                            Margin="10 0 0 0"
                            Text="{Binding ConvertFromCryptocurrency.Id}"/>
                 <TextBlock FontSize="18" 
-                           Foreground="White" 
+                           Foreground="{DynamicResource Text}" 
                            FontWeight="Bold" 
                            FontFamily="Comic Sans MS"
                            Margin="20 0"
                            Text="="/>
                 <TextBlock FontSize="18" 
-                           Foreground="White" 
+                           Foreground="{DynamicResource Text}" 
                            FontWeight="Bold" 
                            FontFamily="Comic Sans MS"
                            Text="{Binding OutputAmount, Mode=TwoWay}"/>
                 <TextBlock FontSize="18" 
-                           Foreground="White" 
+                           Foreground="{DynamicResource Text}" 
                            FontWeight="Bold" 
                            FontFamily="Comic Sans MS"
                            Margin="10 0 0 0"

@@ -4,46 +4,54 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CryptocurrenciesCollector.Pages"
+      xmlns:converters ="clr-namespace:CryptocurrenciesCollector.Helpers.Converters;assembly=CryptocurrenciesCollector.Helpers"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SettingsPage">
 
+    <Page.Resources>
+        <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+    </Page.Resources>
+    
     <Grid>
         <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top">
             <StackPanel Orientation="Horizontal">
                 <RadioButton Content="Dark" 
-                     IsChecked="True"
+                     IsChecked="{Binding CurrentThemeIsDark, Mode=TwoWay}"
                      Width="100"
                      Height="50"
-                     Foreground="White"
+                     Foreground="{DynamicResource Text}"
+                     Command="{Binding ChangeThemeCommand}"
+                             CommandParameter="DarkTheme"
                      FontSize="14"
-                     Style="{StaticResource SettingsMenuButtonTheme}"/>
-                <RadioButton Content="White" 
+                     Style="{StaticResource SettingsMenuButtonStyle}"/>
+                <RadioButton Content="Light" 
+                     IsChecked="{Binding CurrentThemeIsDark, Mode=TwoWay, Converter={StaticResource InverseBoolConverter}}"
                      Width="100"
-                     IsChecked="False"
                      Height="50"
-                     Foreground="White"
+                     Foreground="{DynamicResource Text}"
+                     Command="{Binding ChangeThemeCommand}"
+                             CommandParameter="LightTheme"
                      FontSize="14"
-                     Style="{StaticResource SettingsMenuButtonTheme}"/>
+                     Style="{StaticResource SettingsMenuButtonStyle}"/>
             </StackPanel>
+            
             <StackPanel Orientation="Horizontal">
                 <RadioButton Content="English" 
                      Width="100"
-                             
                      IsChecked="True"
                      Height="50"
-                     Foreground="White"
+                     Foreground="{DynamicResource Text}"
                      FontSize="14"
-                     Style="{StaticResource SettingsMenuButtonTheme}"/>
+                     Style="{StaticResource SettingsMenuButtonStyle}"/>
                 <RadioButton Content="Українська" 
                      Width="100"
-                     IsChecked="False"
                      Height="50"
-                     Foreground="White"
+                     Foreground="{DynamicResource Text}"
                      FontSize="14"
-                     Style="{StaticResource SettingsMenuButtonTheme}"/>
+                     Style="{StaticResource SettingsMenuButtonStyle}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

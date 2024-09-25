@@ -8,18 +8,22 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
 
-    <Grid >
+    <Grid>
         <TextBlock Text="Top 10"
-           HorizontalAlignment="Center" VerticalAlignment="Top"
-           Margin="0 15 0 0"
-           Grid.Row="0" Grid.Column="0" 
-           FontSize="18" Foreground="White" FontWeight="Bold" FontFamily="Comic Sans MS"/>
+                   HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Margin="0 15 0 0"
+                   Grid.Row="0" Grid.Column="0" 
+                   FontSize="18" 
+                   Foreground="{DynamicResource Text}"
+                   FontWeight="Bold" 
+                   FontFamily="Comic Sans MS"/>
         <ListView ItemsSource="{Binding Cryptocurrencies}"
-           SelectedItem="{Binding SelectedTopCryptocurrency, Mode=TwoWay}"
-           HorizontalAlignment="Center" VerticalAlignment="Top"
-           Margin="0 50 0 15"
-           Grid.Row="0" Grid.Column="0"
-           Grid.RowSpan="2">
+                  SelectedItem="{Binding SelectedTopCryptocurrency, Mode=TwoWay}"
+                  HorizontalAlignment="Center" VerticalAlignment="Top"
+                  Margin="0 50 0 15"
+                  Grid.Row="0" 
+                  Grid.Column="0"
+                  Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Rank" DisplayMemberBinding="{Binding Rank}" Width="150"/>

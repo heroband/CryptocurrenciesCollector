@@ -29,7 +29,7 @@ namespace CryptocurrenciesCollector.Helpers.Behaviors
             e.Handled = !regex.IsMatch(((TextBox)sender).Text + e.Text);
         }
 
-        [GeneratedRegex(@"^\d+(\.\d*)?$")]
+        [GeneratedRegex(@"^(0\.\d*|[1-9]\d*(\.\d*)?)$")]
         private static partial Regex ExchangeTextBoxValidation();
     }
 }

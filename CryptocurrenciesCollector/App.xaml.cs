@@ -38,6 +38,8 @@ namespace CryptocurrenciesCollector
                 new CryptocurrencyApiService(_configuration["ApiSettings:CoinCapApiKey"])
             );
             services.AddSingleton<MainViewModel>();
+            services.AddSingleton<SettingsViewModel>();
+
 
             services.AddSingleton<INavigationService, NavigationService>(provider =>
             {
@@ -54,11 +56,13 @@ namespace CryptocurrenciesCollector
             var navigationService = ServicesProvider.GetRequiredService<INavigationService>();
             var viewModel = ServicesProvider.GetRequiredService<MainViewModel>();
 
+            var settingsViewModel = ServicesProvider.GetRequiredService<SettingsViewModel>();
+
             navigationService.AddNavigationPage(NavigationPage.Main, () => new MainPage(viewModel));
             navigationService.AddNavigationPage(NavigationPage.DetailInformation, () => new DetailInformationPage(viewModel));
             navigationService.AddNavigationPage(NavigationPage.Search, () => new SearchPage(viewModel));
             navigationService.AddNavigationPage(NavigationPage.Convert, () => new ConvertPage(viewModel));
-            navigationService.AddNavigationPage(NavigationPage.Settings, () => new SettingsPage(viewModel));
+            navigationService.AddNavigationPage(NavigationPage.Settings, () => new SettingsPage(settingsViewModel));
 
         }
     }
