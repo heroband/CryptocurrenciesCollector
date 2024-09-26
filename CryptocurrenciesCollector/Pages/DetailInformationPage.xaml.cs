@@ -15,18 +15,16 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CryptocurrenciesCollector.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using OxyPlot.Wpf;
 
 namespace CryptocurrenciesCollector.Pages
 {
     public partial class DetailInformationPage : Page
     {
-        private bool _isSortedAscending = true;
-
         public DetailInformationPage(MainViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
         }
-
     }
 }

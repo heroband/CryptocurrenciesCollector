@@ -17,6 +17,10 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using System.Reflection;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
+using System.Reflection.Metadata;
 
 namespace CryptocurrenciesCollector.ViewModels
 {
@@ -57,8 +61,14 @@ namespace CryptocurrenciesCollector.ViewModels
         [ObservableProperty]
         private bool isCurrencyConvertAvailable;
 
+        [ObservableProperty]
+        private PlotModel? currentPlotModel;
+        private bool _isPlotInitialized;
+
         public ObservableCollection<Cryptocurrency> SearchedCryptocurrencies { get; } = [];
         public ObservableCollection<Cryptocurrency> Cryptocurrencies { get; } = [];
+        public ObservableCollection<Candle> CryptocurrencyCandles { get; } = [];
+
 
         private bool _isSortedAscending = true;
 
@@ -89,7 +99,59 @@ namespace CryptocurrenciesCollector.ViewModels
             var cryptocurrency = await cryptoService.GetAssetById(cryptocurrencyId);
             CryptocurrencyInfo = cryptocurrency;
             HasMarkets = CryptocurrencyInfo.Markets != null;
+
+            await GetCryptocurrencyHistory(cryptocurrencyId);
             navigationService.NavigateTo(NavigationPage.DetailInformation);
+            InitializePlot();
+        }
+
+        private void InitializePlot()
+        {
+            var plotModel = new PlotModel { Title = "Cryptocurrency Price" };
+
+            var timeAxis = new DateTimeAxis
+            {
+                Position = AxisPosition.Bottom,
+                StringFormat = "dd/MM",
+                Title = "Date",
+                IntervalType = DateTimeIntervalType.Days,
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Dot
+            };
+            plotModel.Axes.Add(timeAxis);
+
+            var priceAxis = new LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Title = "Price (USD)",
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Dot
+            };
+            plotModel.Axes.Add(priceAxis);
+
+            var candleSeries = new CandleStickSeries
+            {
+                Title = "Candlestick",
+                IncreasingColor = OxyColors.Green,
+                DecreasingColor = OxyColors.Red,
+                TrackerFormatString = "Time: {1:dd/MM/yyyy}\nOpen: {2:0.00}\nHigh: {3:0.00}\nLow: {4:0.00}\nClose: {5:0.00}"
+            };
+
+            foreach (var candle in CryptocurrencyCandles)
+            {
+                candleSeries.Items.Add(new HighLowItem
+                {
+                    X = DateTimeAxis.ToDouble(candle.Time.DateTime),
+                    Open = Convert.ToDouble(candle.Open),
+                    High = Convert.ToDouble(candle.High),
+                    Low = Convert.ToDouble(candle.Low),
+                    Close = Convert.ToDouble(candle.Close)
+                });
+            }
+
+            plotModel.Series.Add(candleSeries);
+
+            CurrentPlotModel = plotModel;
         }
 
         [RelayCommand]
@@ -226,6 +288,17 @@ namespace CryptocurrenciesCollector.ViewModels
             }
         }
 
-        
+        [RelayCommand]
+        public async Task GetCryptocurrencyHistory(string cryptocurrencyId)
+        {
+            var assetHistory = await cryptoService.GetAssetHistory(cryptocurrencyId);
+            var candles = cryptoService.CreateCandlesFromHistory(assetHistory);
+            CryptocurrencyCandles.Clear();
+            foreach(var candle in candles)
+            {
+                CryptocurrencyCandles.Add(candle);
+            }
+        }
+
     }
 }

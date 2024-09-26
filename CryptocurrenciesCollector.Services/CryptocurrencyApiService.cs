@@ -19,6 +19,7 @@ namespace CryptocurrenciesCollector.Services
     {
         private readonly HttpClient _httpClient;
         const int upperCoinCapAssetsLimit = 2000;
+        const string coinCapAssetHistoryInterval = "h2";
 
         public CryptocurrencyApiService(string apiKey)
         {
@@ -91,6 +92,38 @@ namespace CryptocurrenciesCollector.Services
             var assets = JsonSerializer.Deserialize<AssetsWrap<List<CryptocurrencyData>>>(assetsJson);
 
             return assets.ToCryptocurrencies();
+        }
+
+        public async Task<List<History>> GetAssetHistory(string id)
+        {
+            var assetResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets/{id}/history?interval={coinCapAssetHistoryInterval}");
+            assetResponse.EnsureSuccessStatusCode();
+            var assetJson = await assetResponse.Content.ReadAsStringAsync();
+            var asset = JsonSerializer.Deserialize<AssetsWrap<List<HistoryData>>>(assetJson);
+
+            return asset.ToCryptocurrencyHistory();
+        }
+
+        public List<Candle> CreateCandlesFromHistory(List<History> historyData)
+        {
+            var groupedData = historyData.GroupBy(h => h.Time.Date).ToList();
+
+            var candles = new List<Candle>();
+
+            foreach (var groupData in groupedData)
+            {
+                var candle = new Candle
+                {
+                    Time = groupData.Key,
+                    Open = groupData.First().PriceUsd,
+                    Close = groupData.Last().PriceUsd,
+                    High = groupData.Max(h => h.PriceUsd),
+                    Low = groupData.Min(h => h.PriceUsd)
+                };
+
+                candles.Add(candle);
+            }
+            return candles;
         }
     }
 }

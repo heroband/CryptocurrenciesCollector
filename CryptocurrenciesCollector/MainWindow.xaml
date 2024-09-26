@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="MainWindow" 
         ResizeMode="NoResize"
-        Height="600" Width="920"
+        Height="900" Width="1200"
         Background="Transparent">
 
 
@@ -90,7 +90,7 @@
                 
             <Grid Grid.Row="1" Grid.Column="1">
                 <Frame x:Name="BaseFrame"
-                       Margin="10 0"
+                       Margin="10 0 0 10"
                        NavigationUIVisibility="Hidden"/>
             </Grid>
 

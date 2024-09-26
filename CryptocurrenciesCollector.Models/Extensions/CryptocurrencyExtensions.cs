@@ -42,5 +42,18 @@ namespace CryptocurrenciesCollector.Models.Extensions
                 })
                 .ToList();
         }
+
+        public static List<History> ToCryptocurrencyHistory(this AssetsWrap<List<HistoryData>> assetInfo)
+        {
+            return assetInfo.Data
+                .Select(info => new History
+                {
+                    PriceUsd = decimal.TryParse(info.PriceUsd, CultureInfo.InvariantCulture, out decimal price) ? price : 0,
+                    Time = DateTimeOffset.FromUnixTimeMilliseconds(info.Time),
+                    CirculatingSupply = info.CirculatingSupply,
+                    Date = info.Date,
+                })
+                .ToList();
+        }
     }
 }

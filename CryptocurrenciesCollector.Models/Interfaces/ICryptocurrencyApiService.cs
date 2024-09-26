@@ -12,5 +12,7 @@ namespace CryptocurrenciesCollector.Models.Interfaces
         Task<List<Cryptocurrency>> GetAssets();
         Task<List<Cryptocurrency>> GetAssets(int limit);
         Task<List<Cryptocurrency>> GetSearchedAssets(string search);
+        Task<List<History>> GetAssetHistory(string id);
+        List<Candle> CreateCandlesFromHistory(List<History> historyData);
     }
 }
