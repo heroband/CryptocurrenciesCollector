@@ -144,13 +144,63 @@
 
             <Grid Grid.Column="1"
                   Grid.RowSpan="2"
-                  Margin="15 0 0 0">
+                  Margin="15 0 0 40">
                 <oxy:PlotView x:Name="plotView"
-                              Model="{Binding CurrentPlotModel}">
+                              Model="{Binding CurrentPlotModel}"
+                              IsMouseWheelEnabled="False">
                     <i:Interaction.Behaviors>
                         <helpers:PlotViewBehavior/>
                     </i:Interaction.Behaviors>
                 </oxy:PlotView>
+                
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="1" Height="Auto"
+                  HorizontalAlignment="Center" Margin="0 5">
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <RadioButton Content="1D" 
+                                 Command="{Binding GetCandlesWith1DayIntervalCommand}"
+                                 IsChecked="True"
+                                 Height="25"
+                                 VerticalAlignment="Bottom"   
+                                 Foreground="{DynamicResource Text}"
+                                 FontSize="14"
+                                 Style="{StaticResource MenuButtonStyle}"/>
+                    <RadioButton Content="7D"
+                                 Command="{Binding GetCandlesWith7DaysIntervalCommand}"
+                                 Height="25"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Bottom"
+                                 Foreground="{DynamicResource Text}" 
+                                 FontSize="14"
+                                 Style="{StaticResource MenuButtonStyle}"
+                                 Margin="15 0"/>
+                    <RadioButton Content="1M" 
+                                 Command="{Binding GetCandlesWith1MonthIntervalCommand}"
+                                 Height="25"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Bottom"
+                                 Foreground="{DynamicResource Text}"
+                                 FontSize="14"
+                                 Style="{StaticResource MenuButtonStyle}"/>
+                    <RadioButton Content="3M" 
+                                 Command="{Binding GetCandlesWith3MonthsIntervalCommand}"
+                                 Height="25"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Bottom"
+                                 Foreground="{DynamicResource Text}"
+                                 FontSize="14"
+                                 Style="{StaticResource MenuButtonStyle}"
+                                 Margin="15 0"/>
+                    <RadioButton Content="1Y" 
+                                 Command="{Binding GetCandlesWith1YearIntervalCommand}"
+                                 Height="25"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Bottom"
+                                 Foreground="{DynamicResource Text}"
+                                 FontSize="14"
+                                 Style="{StaticResource MenuButtonStyle}"/>
+                </StackPanel>
             </Grid>
             
         </Grid>

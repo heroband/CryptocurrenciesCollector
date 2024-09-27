@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="MainWindow" 
         ResizeMode="NoResize"
-        Height="900" Width="1200"
+        Height="800" Width="1200"
         Background="Transparent">
 
 

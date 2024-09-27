@@ -7,6 +7,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
 using CryptocurrenciesCollector.Models;
 using CryptocurrenciesCollector.Models.Extensions;
 using CryptocurrenciesCollector.Models.Interfaces;
@@ -94,9 +95,9 @@ namespace CryptocurrenciesCollector.Services
             return assets.ToCryptocurrencies();
         }
 
-        public async Task<List<History>> GetAssetHistory(string id)
+        public async Task<List<History>> GetAssetHistory(string id, string interval, long start, long end)
         {
-            var assetResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets/{id}/history?interval={coinCapAssetHistoryInterval}");
+            var assetResponse = await _httpClient.GetAsync($"https://api.coincap.io/v2/assets/{id}/history?interval={interval}&start={start}&end={end}");
             assetResponse.EnsureSuccessStatusCode();
             var assetJson = await assetResponse.Content.ReadAsStringAsync();
             var asset = JsonSerializer.Deserialize<AssetsWrap<List<HistoryData>>>(assetJson);
@@ -104,9 +105,9 @@ namespace CryptocurrenciesCollector.Services
             return asset.ToCryptocurrencyHistory();
         }
 
-        public List<Candle> CreateCandlesFromHistory(List<History> historyData)
+        public List<Candle> CreateCandlesFromHistory(List<History> historyData, Func<DateTime, DateTime> groupingStrategy)
         {
-            var groupedData = historyData.GroupBy(h => h.Time.Date).ToList();
+            var groupedData = historyData.GroupBy(h => groupingStrategy(h.Time.UtcDateTime)).ToList();
 
             var candles = new List<Candle>();
 
@@ -125,5 +126,7 @@ namespace CryptocurrenciesCollector.Services
             }
             return candles;
         }
+
+
     }
 }
