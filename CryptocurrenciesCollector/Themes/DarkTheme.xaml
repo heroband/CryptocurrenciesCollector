@@ -3,4 +3,6 @@
     <SolidColorBrush Color="#151f2d" x:Key="Backdrop"/>
     <SolidColorBrush Color="#dfe6e9" x:Key="Text"/>
     <SolidColorBrush Color="#1e2e44" x:Key="Card"/>
+    <SolidColorBrush Color="DarkGray" x:Key="SubText"/>
+    <SolidColorBrush Color="#FF2B4261"  x:Key="PressedButton"/>
 </ResourceDictionary>

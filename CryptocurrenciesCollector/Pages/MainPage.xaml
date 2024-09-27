@@ -9,28 +9,39 @@
       Title="MainPage">
 
     <Grid>
-        <TextBlock Text="Top 10"
-                   HorizontalAlignment="Center" VerticalAlignment="Top"
-                   Margin="0 15 0 0"
-                   Grid.Row="0" Grid.Column="0" 
-                   FontSize="18" 
-                   Foreground="{DynamicResource Text}"
-                   FontWeight="Bold" 
-                   FontFamily="Comic Sans MS"/>
-        <ListView ItemsSource="{Binding Cryptocurrencies}"
-                  SelectedItem="{Binding SelectedTopCryptocurrency, Mode=TwoWay}"
-                  HorizontalAlignment="Center" VerticalAlignment="Top"
-                  Margin="0 50 0 15"
-                  Grid.Row="0" 
-                  Grid.Column="0"
-                  Grid.RowSpan="2">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Rank" DisplayMemberBinding="{Binding Rank}" Width="150"/>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <StackPanel>
+            <TextBlock Text="Top 10"
+                       HorizontalAlignment="Center" VerticalAlignment="Top"
+                       Grid.Row="0" Grid.Column="0" 
+                       FontSize="34" 
+                       Foreground="{DynamicResource Text}"
+                       FontWeight="Bold" 
+                       FontFamily="Comic Sans MS"/>
+            <ListView ItemsSource="{Binding Cryptocurrencies}"
+                      SelectedItem="{Binding SelectedTopCryptocurrency, Mode=TwoWay}"
+                      HorizontalAlignment="Center" 
+                      Margin="0 20 0 0"
+                      Grid.Row="0" 
+                      Grid.Column="0"
+                      Grid.RowSpan="2">
+                <ListView.Resources>
+                    <Style TargetType="GridViewColumnHeader">
+                        <Setter Property="IsHitTestVisible" Value="False"/>
+                    </Style>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Rank" 
+                                        DisplayMemberBinding="{Binding Rank}"
+                                        Width="75"/>
+                        <GridViewColumn Header="Name" 
+                                        DisplayMemberBinding="{Binding Name}" 
+                                        Width="Auto"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+        
     </Grid>
 
     <i:Interaction.Triggers>

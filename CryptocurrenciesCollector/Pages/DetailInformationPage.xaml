@@ -27,17 +27,17 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Cryptocurrency detail information"
+            <TextBlock Text="Detail information"
                        Foreground="{DynamicResource Text}"
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Top"
                        Grid.Row="0" 
                        Grid.Column="0" 
-                       FontSize="18" 
+                       FontSize="24" 
                        FontWeight="Bold" 
                        FontFamily="Comic Sans MS"/>
-
-            <Grid Margin="0 30 0 0" 
+            
+            <Grid Margin="0 50 0 0" 
                   Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -80,17 +80,17 @@
                            Grid.Column="1" 
                            Grid.Row="0" 
                            HorizontalAlignment="Left"/>
-                <TextBlock Text="{Binding CryptocurrencyInfo.PriceUsd}"
+                <TextBlock Text="{Binding CryptocurrencyInfo.PriceUsd, StringFormat={}{0:C3}}"
                            Foreground="{DynamicResource Text}" 
                            Grid.Column="1" 
                            Grid.Row="1" 
                            HorizontalAlignment="Left"/>
-                <TextBlock Text="{Binding CryptocurrencyInfo.VolumeUsd24Hr}" 
+                <TextBlock Text="{Binding CryptocurrencyInfo.VolumeUsd24Hr, StringFormat={}{0:C3}}" 
                            Foreground="{DynamicResource Text}" 
                            Grid.Column="1" 
                            Grid.Row="2" 
                            HorizontalAlignment="Left"/>
-                <TextBlock Text="{Binding CryptocurrencyInfo.ChangePercent24Hr}" 
+                <TextBlock Text="{Binding CryptocurrencyInfo.ChangePercent24Hr, StringFormat={}{0:F2}%}" 
                            Foreground="{DynamicResource Text}" 
                            Grid.Column="1" 
                            Grid.Row="3" 
@@ -119,12 +119,17 @@
                       Visibility="{Binding HasMarkets, 
                                    Converter={StaticResource BooleanToVisibilityConverter}}"
                       HorizontalAlignment="Left" VerticalAlignment="Top"
-                      Margin="0 10 0 0"
+                      Margin="0 10 0 40"
                       Grid.Row="1">
+
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Markets" DisplayMemberBinding="{Binding ExchangeId}" Width="75"/>
-                        <GridViewColumn Header="MarketPrice" Width="75" DisplayMemberBinding="{Binding PriceUsd}">
+                        <GridViewColumn Header="Markets"
+                                        Width="Auto"
+                                        DisplayMemberBinding="{Binding ExchangeId}"/>
+                        <GridViewColumn Header="MarketPrice (USD)" 
+                                        Width="Auto"
+                                        DisplayMemberBinding="{Binding PriceUsd, StringFormat={}{0:C3}}">
                             <GridViewColumn.HeaderTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="MarketPrice" Cursor="Hand">
