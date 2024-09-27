@@ -21,7 +21,8 @@
                       SelectedItem="{Binding SelectedTopCryptocurrency, Mode=TwoWay}"
                       HorizontalAlignment="Center" 
                       Margin="0 20 0 0"
-                      Grid.Row="0" 
+                      Grid.Row="0"
+                      FontSize="24"
                       Grid.Column="0"
                       Grid.RowSpan="2">
                 <ListView.Resources>
@@ -33,7 +34,7 @@
                     <GridView>
                         <GridViewColumn Header="Rank" 
                                         DisplayMemberBinding="{Binding Rank}"
-                                        Width="75"/>
+                                        Width="150"/>
                         <GridViewColumn Header="Name" 
                                         DisplayMemberBinding="{Binding Name}" 
                                         Width="Auto"/>

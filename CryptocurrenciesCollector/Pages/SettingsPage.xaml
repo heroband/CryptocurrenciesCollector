@@ -26,7 +26,7 @@
                      Command="{Binding ChangeThemeCommand}"
                              CommandParameter="DarkTheme"
                      FontSize="14"
-                     Style="{StaticResource SettingsMenuButtonStyle}"/>
+                     Style="{StaticResource MenuButtonStyle}"/>
                 <RadioButton Content="Light" 
                      IsChecked="{Binding CurrentThemeIsDark, Mode=TwoWay, Converter={StaticResource InverseBoolConverter}}"
                      Width="100"
@@ -35,7 +35,7 @@
                      Command="{Binding ChangeThemeCommand}"
                              CommandParameter="LightTheme"
                      FontSize="14"
-                     Style="{StaticResource SettingsMenuButtonStyle}"/>
+                     Style="{StaticResource MenuButtonStyle}"/>
             </StackPanel>
             
             <StackPanel Orientation="Horizontal">
@@ -45,13 +45,13 @@
                      Height="50"
                      Foreground="{DynamicResource Text}"
                      FontSize="14"
-                     Style="{StaticResource SettingsMenuButtonStyle}"/>
+                     Style="{StaticResource MenuButtonStyle}"/>
                 <RadioButton Content="Українська" 
                      Width="100"
                      Height="50"
                      Foreground="{DynamicResource Text}"
                      FontSize="14"
-                     Style="{StaticResource SettingsMenuButtonStyle}"/>
+                     Style="{StaticResource MenuButtonStyle}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

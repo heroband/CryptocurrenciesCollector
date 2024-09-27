@@ -104,29 +104,5 @@ namespace CryptocurrenciesCollector.Services
 
             return asset.ToCryptocurrencyHistory();
         }
-
-        public List<Candle> CreateCandlesFromHistory(List<History> historyData, Func<DateTime, DateTime> groupingStrategy)
-        {
-            var groupedData = historyData.GroupBy(h => groupingStrategy(h.Time.UtcDateTime)).ToList();
-
-            var candles = new List<Candle>();
-
-            foreach (var groupData in groupedData)
-            {
-                var candle = new Candle
-                {
-                    Time = groupData.Key,
-                    Open = groupData.First().PriceUsd,
-                    Close = groupData.Last().PriceUsd,
-                    High = groupData.Max(h => h.PriceUsd),
-                    Low = groupData.Min(h => h.PriceUsd)
-                };
-
-                candles.Add(candle);
-            }
-            return candles;
-        }
-
-
     }
 }

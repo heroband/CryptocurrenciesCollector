@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CryptocurrenciesCollector.Services\CryptocurrenciesCollector.Services.csproj" />
+    <ProjectReference Include="..\CryptocurrenciesCollector.Models\CryptocurrenciesCollector.Models.csproj" />
   </ItemGroup>
 
 </Project>

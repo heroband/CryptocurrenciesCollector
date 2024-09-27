@@ -7,7 +7,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CryptocurrenciesCollector.Models;
 using CryptocurrenciesCollector.Models.Interfaces;
-using CryptocurrenciesCollector.Services;
 using System.Windows.Navigation;
 using System.Windows.Media;
 using CryptocurrenciesCollector.Models.Enums;
@@ -21,6 +20,8 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.Reflection.Metadata;
+using CryptocurrenciesCollector.Models.Extensions;
+using CryptocurrenciesCollector.Models.Constants;
 
 namespace CryptocurrenciesCollector.ViewModels
 {
@@ -63,20 +64,12 @@ namespace CryptocurrenciesCollector.ViewModels
 
         [ObservableProperty]
         private PlotModel? currentPlotModel;
-        private bool _isPlotInitialized;
 
         public ObservableCollection<Cryptocurrency> SearchedCryptocurrencies { get; } = [];
         public ObservableCollection<Cryptocurrency> Cryptocurrencies { get; } = [];
-        public ObservableCollection<Candle> CryptocurrencyCandles { get; } = [];
 
 
         private bool _isSortedAscending = true;
-
-        private string interval;
-        private long start;
-        private long end;
-        Func<DateTime, DateTime> strategy;
-        private string AxisStringFormat;
 
         public MainViewModel(ICryptocurrencyApiService cryptoService, INavigationService navigationService)
         {
@@ -106,78 +99,21 @@ namespace CryptocurrenciesCollector.ViewModels
             CryptocurrencyInfo = cryptocurrency;
             HasMarkets = CryptocurrencyInfo.Markets != null;
 
-            interval = "h2";
-            strategy = GroupByDay;
-            AxisStringFormat = "dd/MM";
+            var interval = "h2";
+            var strategy = CandlesConstants.GroupByDay;
+            var axisStringFormat = "dd/MM";
 
-            start = new DateTimeOffset(DateTime.UtcNow.AddMonths(-1)).ToUnixTimeMilliseconds();
-            end = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+            var start = new DateTimeOffset(DateTime.UtcNow.AddMonths(-1)).ToUnixTimeMilliseconds();
+            var end = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
 
-            await GetCryptocurrencyHistory(cryptocurrencyId);
+            await GetCryptocurrencyHistory(cryptocurrencyId, interval, start, end, strategy);
             navigationService.NavigateTo(NavigationPage.DetailInformation);
-            InitializePlot();
+            InitializePlot(axisStringFormat);
         }
 
-        private void InitializePlot()
-        {
-            if (CurrentPlotModel != null)
-            {
-                CurrentPlotModel.Series.Clear();
-            }
-
-            var plotModel = new PlotModel { Title = "Japanese candlestick chart" };
-
-            var timeAxis = new DateTimeAxis
-            {
-                Position = AxisPosition.Bottom,
-                IsPanEnabled = false,
-                IsZoomEnabled = false,
-                StringFormat = AxisStringFormat,
-                Title = "Date",
-                IntervalType = DateTimeIntervalType.Days,
-                MajorGridlineStyle = LineStyle.Solid,
-                MinorGridlineStyle = LineStyle.Dot
-            };
-            plotModel.Axes.Add(timeAxis);
-
-            var priceAxis = new LinearAxis
-            {
-                Position = AxisPosition.Left,
-                IsPanEnabled = false,
-                IsZoomEnabled = false,
-                Title = "Price (USD)",
-                MajorGridlineStyle = LineStyle.Solid,
-                MinorGridlineStyle = LineStyle.Dot
-            };
-            plotModel.Axes.Add(priceAxis);
-
-            var candleSeries = new CandleStickSeries
-            {
-                Title = "Candlestick",
-                IncreasingColor = OxyColors.Green,
-                DecreasingColor = OxyColors.Red
-            };
-
-            candleSeries.Items.Clear();
-            foreach (var candle in CryptocurrencyCandles)
-            {
-                candleSeries.Items.Add(new HighLowItem
-                {
-                    X = DateTimeAxis.ToDouble(candle.Time.DateTime),
-                    Open = Convert.ToDouble(candle.Open),
-                    High = Convert.ToDouble(candle.High),
-                    Low = Convert.ToDouble(candle.Low),
-                    Close = Convert.ToDouble(candle.Close)
-                });
-            }
-
-            plotModel.Series.Add(candleSeries);
-
-            CurrentPlotModel = plotModel;
-        }
 
         [RelayCommand]
-        public async Task GetTopAssets()
+        private async Task GetTopAssets()
         {
             var topCryptocurrencies = await cryptoService.GetAssets(topCryptocurrenciesNumber);
             Cryptocurrencies.Clear();
@@ -207,7 +143,7 @@ namespace CryptocurrenciesCollector.ViewModels
         }
 
         [RelayCommand]
-        public async Task GetSearchedCryptocurrencies()
+        private async Task GetSearchedCryptocurrencies()
         {
             if (!string.IsNullOrEmpty(SearchText))
             {
@@ -310,100 +246,5 @@ namespace CryptocurrenciesCollector.ViewModels
             }
         }
 
-        public async Task GetCryptocurrencyHistory(string cryptocurrencyId)
-        {
-            var assetHistory = await cryptoService.GetAssetHistory(cryptocurrencyId, interval, start, end);
-            var candles = cryptoService.CreateCandlesFromHistory(assetHistory, strategy);
-            CryptocurrencyCandles.Clear();
-            foreach(var candle in candles)
-            {
-                CryptocurrencyCandles.Add(candle);
-            }
-            Debug.WriteLine("*");
-        }
-
-
-        [RelayCommand]
-        private async Task GetCandlesWith1DayInterval()
-        {
-            interval = "m1";
-            start = new DateTimeOffset(DateTime.UtcNow.AddDays(-1)).ToUnixTimeMilliseconds();
-            end = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
-
-            strategy = GroupByHour;
-            AxisStringFormat = "HH:mm\ndd/MM";
-
-            await GetCryptocurrencyHistory(CryptocurrencyInfo.Id);
-            InitializePlot();
-        }
-        [RelayCommand]
-        private async Task GetCandlesWith7DaysInterval()
-        {
-            interval = "m30";
-            start = new DateTimeOffset(DateTime.UtcNow.AddDays(-7)).ToUnixTimeMilliseconds();
-            end = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
-
-            strategy = GroupBy6Hours;
-            AxisStringFormat = "dd/MM";
-
-            await GetCryptocurrencyHistory(CryptocurrencyInfo.Id);
-            InitializePlot();
-        }
-        [RelayCommand]
-        private async Task GetCandlesWith1MonthInterval()
-        {
-            interval = "h2";
-            start = new DateTimeOffset(DateTime.UtcNow.AddMonths(-1)).ToUnixTimeMilliseconds();
-            end = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
-
-            strategy = GroupByDay;
-            AxisStringFormat = "dd/MM";
-
-            await GetCryptocurrencyHistory(CryptocurrencyInfo.Id);
-            InitializePlot();
-        }
-        [RelayCommand]
-        private async Task GetCandlesWith3MonthsInterval()
-        {
-            interval = "h6";
-            start = new DateTimeOffset(DateTime.UtcNow.AddMonths(-3)).ToUnixTimeMilliseconds();
-            end = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
-
-            strategy = GroupByDay;
-            AxisStringFormat = "dd/MM";
-
-            await GetCryptocurrencyHistory(CryptocurrencyInfo.Id);
-            InitializePlot();
-        }
-        [RelayCommand]
-        private async Task GetCandlesWith1YearInterval()
-        {
-            interval = "h12";
-            start = new DateTimeOffset(DateTime.UtcNow.AddDays(2).AddYears(-1)).ToUnixTimeMilliseconds();
-            end = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
-
-            strategy = GroupByDay;
-            AxisStringFormat = "dd/MM\nyyyy";
-
-            await GetCryptocurrencyHistory(CryptocurrencyInfo.Id);
-            InitializePlot();
-        }
-
-
-        private DateTime GroupByHour(DateTime time)
-        {
-            return new DateTime(time.Year, time.Month, time.Day, time.Hour, 0, 0);
-        }
-
-        private DateTime GroupBy6Hours(DateTime time)
-        {
-            int hourBlock = time.Hour / 6 * 6;
-            return new DateTime(time.Year, time.Month, time.Day, hourBlock, 0, 0);
-        }
-
-        private DateTime GroupByDay(DateTime time)
-        {
-            return time.Date;
-        }
     }
 }

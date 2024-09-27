@@ -65,15 +65,19 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Column="1" Margin="30">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
+            <Border Grid.Column="1" 
+                    Margin="30" 
+                    Background="{DynamicResource Card}"
+                    CornerRadius="8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
                     <Button Content="🔍" 
-                            Background="{DynamicResource Card}"
+                            BorderThickness="0"
+                            Background="Transparent"
                             Foreground="{DynamicResource Text}"
                             Grid.Column="0"
                             Width="40" 
@@ -86,11 +90,12 @@
                              HorizontalAlignment = "Stretch"
                              VerticalAlignment="Center"
                              Style="{StaticResource TextboxStyle}"/>    
-            </Grid>
+                </Grid>
+            </Border>
                 
             <Grid Grid.Row="1" Grid.Column="1">
                 <Frame x:Name="BaseFrame"
-                       Margin="10 0 0 10"
+                       Margin="30 0 30 10"
                        NavigationUIVisibility="Hidden"/>
             </Grid>
 
