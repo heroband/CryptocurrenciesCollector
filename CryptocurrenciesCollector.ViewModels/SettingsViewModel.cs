@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using System.Windows.Automation;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CryptocurrenciesCollector.Helpers;
+using WPFLocalizeExtension.Engine;
 
 namespace CryptocurrenciesCollector.ViewModels
 {
@@ -17,6 +19,9 @@ namespace CryptocurrenciesCollector.ViewModels
     {
         [ObservableProperty]
         private bool currentThemeIsDark = true;
+
+        [ObservableProperty]
+        private bool currentLanguageIsEnglish = true;
 
         [RelayCommand]
         private void ChangeTheme(string theme)
@@ -40,5 +45,21 @@ namespace CryptocurrenciesCollector.ViewModels
                 Application.Current.Resources.MergedDictionaries.Add(lightTheme);
             }
         }
+
+        [RelayCommand]
+        private void ChangeLanguage(string language)
+        {
+            if (language == "en")
+            {
+                CurrentLanguageIsEnglish = true;
+                LocalizeDictionary.Instance.Culture = new CultureInfo("en");
+            }
+            else if (language == "uk")
+            {
+                CurrentLanguageIsEnglish = false;
+                LocalizeDictionary.Instance.Culture = new CultureInfo("uk");
+            }
+        }
+
     }
 }

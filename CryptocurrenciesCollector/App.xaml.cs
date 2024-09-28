@@ -10,6 +10,9 @@ using CryptocurrenciesCollector.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CryptocurrenciesCollector.Pages;
+using System.Globalization;
+using WPFLocalizeExtension.Engine;
+using System.Diagnostics;
 
 namespace CryptocurrenciesCollector
 {
@@ -20,6 +23,9 @@ namespace CryptocurrenciesCollector
         public App()
         {
             this.Activated += OnNavigationInitialization;
+
+            LocalizeDictionary.Instance.Culture = new CultureInfo("en");
+            // LocalizeDictionary.Instance.Culture = new CultureInfo("uk");
 
             var environmentName = Environment.GetEnvironmentVariable("ENVIRONMENT_STAGE");
 

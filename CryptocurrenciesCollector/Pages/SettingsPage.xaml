@@ -40,16 +40,21 @@
             
             <StackPanel Orientation="Horizontal">
                 <RadioButton Content="English" 
+                             IsChecked="{Binding CurrentLanguageIsEnglish, Mode=TwoWay}"
                      Width="100"
-                     IsChecked="True"
                      Height="50"
                      Foreground="{DynamicResource Text}"
+                     Command="{Binding ChangeLanguageCommand}"
+                     CommandParameter="en"
                      FontSize="14"
                      Style="{StaticResource MenuButtonStyle}"/>
                 <RadioButton Content="Українська" 
+                     IsChecked="{Binding CurrentLanguageIsEnglish, Mode=TwoWay, Converter={StaticResource InverseBoolConverter}}"
                      Width="100"
                      Height="50"
                      Foreground="{DynamicResource Text}"
+                     Command="{Binding ChangeLanguageCommand}"
+                     CommandParameter="uk"
                      FontSize="14"
                      Style="{StaticResource MenuButtonStyle}"/>
             </StackPanel>
