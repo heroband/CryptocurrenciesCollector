@@ -27,5 +27,10 @@ namespace CryptocurrenciesCollector.Pages
             DataContext = viewModel;
 
         }
+
+        private void ListView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

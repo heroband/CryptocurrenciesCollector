@@ -24,20 +24,53 @@
                       Grid.Row="0"
                       FontSize="24"
                       Grid.Column="0"
-                      Grid.RowSpan="2">
+                      Grid.RowSpan="2"
+                      Background="Transparent">
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource HoverBackground}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource Text}"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource SelectedBackground}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource Text}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                
                 <ListView.Resources>
                     <Style TargetType="GridViewColumnHeader">
                         <Setter Property="IsHitTestVisible" Value="False"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="{DynamicResource Text}"/>
                     </Style>
                 </ListView.Resources>
+                
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Rank" 
-                                        DisplayMemberBinding="{Binding Rank}"
-                                        Width="150"/>
-                        <GridViewColumn Header="Name" 
-                                        DisplayMemberBinding="{Binding Name}" 
-                                        Width="Auto"/>
+                        <GridViewColumn Header="Rank" Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Rank}"
+                                   Foreground="{DynamicResource Text}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Name" Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"
+                                   Foreground="{DynamicResource Text}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>

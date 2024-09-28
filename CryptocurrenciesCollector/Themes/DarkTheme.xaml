@@ -5,4 +5,6 @@
     <SolidColorBrush Color="#1e2e44" x:Key="Card"/>
     <SolidColorBrush Color="DarkGray" x:Key="SubText"/>
     <SolidColorBrush Color="#FF2B4261"  x:Key="PressedButton"/>
+    <SolidColorBrush x:Key="HoverBackground" Color="#33FFFFFF"/>
+    <SolidColorBrush x:Key="SelectedBackground" Color="#FF4CAF50"/>
 </ResourceDictionary>
