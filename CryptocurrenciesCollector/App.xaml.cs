@@ -20,9 +20,12 @@ namespace CryptocurrenciesCollector
         public App()
         {
             this.Activated += OnNavigationInitialization;
+
+            var environmentName = Environment.GetEnvironmentVariable("ENVIRONMENT_STAGE");
+
             var builder = new ConfigurationBuilder()
                .SetBasePath(Directory.GetCurrentDirectory())
-               .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
+               .AddJsonFile($"appsettings.{environmentName}.json", optional: false, reloadOnChange: true);
 
             _configuration = builder.Build();
             ServicesProvider = ConfigureServices();
