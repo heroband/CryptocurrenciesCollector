@@ -23,9 +23,7 @@ namespace CryptocurrenciesCollector
         public App()
         {
             this.Activated += OnNavigationInitialization;
-
             LocalizeDictionary.Instance.Culture = new CultureInfo("en");
-            // LocalizeDictionary.Instance.Culture = new CultureInfo("uk");
 
             var environmentName = Environment.GetEnvironmentVariable("ENVIRONMENT_STAGE");
 
@@ -34,17 +32,17 @@ namespace CryptocurrenciesCollector
                .AddJsonFile($"appsettings.{environmentName}.json", optional: false, reloadOnChange: true);
 
             _configuration = builder.Build();
-            ServicesProvider = ConfigureServices();
+            ServicesProvider = ConfigureServices(_configuration);
         }
 
         public new static App Current => (App)Application.Current;
         public IServiceProvider ServicesProvider { get; }
 
-        private IServiceProvider ConfigureServices()
+        private static IServiceProvider ConfigureServices(IConfiguration configuration)
         {
             var services = new ServiceCollection();
             services.AddTransient<ICryptocurrencyApiService, CryptocurrencyApiService>(s => 
-                new CryptocurrencyApiService(_configuration["ApiSettings:CoinCapApiKey"])
+                new CryptocurrencyApiService(configuration["ApiSettings:CoinCapApiKey"])
             );
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<SettingsViewModel>();
@@ -64,7 +62,6 @@ namespace CryptocurrenciesCollector
             this.Activated -= OnNavigationInitialization;
             var navigationService = ServicesProvider.GetRequiredService<INavigationService>();
             var viewModel = ServicesProvider.GetRequiredService<MainViewModel>();
-
             var settingsViewModel = ServicesProvider.GetRequiredService<SettingsViewModel>();
 
             navigationService.AddNavigationPage(NavigationPage.Main, () => new MainPage(viewModel));

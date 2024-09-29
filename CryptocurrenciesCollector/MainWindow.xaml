@@ -8,7 +8,7 @@
         xmlns:enums="clr-namespace:CryptocurrenciesCollector.Models.Enums;assembly=CryptocurrenciesCollector.Models"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         lex:LocalizeDictionary.DesignCulture="en"
-        lex:ResxLocalizationProvider.DefaultAssembly="CryptocurrenciesCollector"
+        lex:ResxLocalizationProvider.DefaultAssembly="CryptocurrenciesCollector.Resources"
         lex:ResxLocalizationProvider.DefaultDictionary="CryptocurrenciesCollector.Resources.Language"
         mc:Ignorable="d" 
         Title="MainWindow" 
@@ -107,6 +107,7 @@
                 <i:EventTrigger EventName="Loaded">
                     <i:InvokeCommandAction Command="{Binding NavigateToCommand}" 
                            CommandParameter="{x:Static enums:NavigationPage.Main}"/>
+                    <i:InvokeCommandAction Command="{Binding SettingsViewModel.InitializeSettingsCommand, Source={StaticResource locator}}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Grid>

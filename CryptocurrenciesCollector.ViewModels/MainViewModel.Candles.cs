@@ -14,6 +14,7 @@ using System.Windows;
 using CryptocurrenciesCollector.Models;
 using System.Collections.ObjectModel;
 using CryptocurrenciesCollector.Models.Extensions;
+using CryptocurrenciesCollector.Resources;
 
 namespace CryptocurrenciesCollector.ViewModels
 {
@@ -102,7 +103,7 @@ namespace CryptocurrenciesCollector.ViewModels
 
             var plotModel = new PlotModel
             {
-                Title = "Japanese candlestick chart",
+                Title = LocalizedStrings.Instanse["Candlestick"],
                 TitleColor = oxyTextColor,
             };
 
@@ -112,7 +113,7 @@ namespace CryptocurrenciesCollector.ViewModels
                 IsPanEnabled = false,
                 IsZoomEnabled = false,
                 StringFormat = axisStringFormat,
-                Title = "Date",
+                Title = LocalizedStrings.Instanse["Date"],
                 TitleColor = oxyTextColor,
                 IntervalType = DateTimeIntervalType.Days,
                 MajorGridlineStyle = LineStyle.Solid,
@@ -130,7 +131,7 @@ namespace CryptocurrenciesCollector.ViewModels
                 Position = AxisPosition.Left,
                 IsPanEnabled = false,
                 IsZoomEnabled = false,
-                Title = "Price (USD)",
+                Title = LocalizedStrings.Instanse["PriceHeader"],
                 TitleColor = oxyTextColor,
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,

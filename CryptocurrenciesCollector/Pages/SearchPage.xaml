@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
       lex:LocalizeDictionary.DesignCulture="en"
-      lex:ResxLocalizationProvider.DefaultAssembly="CryptocurrenciesCollector"
+      lex:ResxLocalizationProvider.DefaultAssembly="CryptocurrenciesCollector.Resources"
       lex:ResxLocalizationProvider.DefaultDictionary="CryptocurrenciesCollector.Resources.Language"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"

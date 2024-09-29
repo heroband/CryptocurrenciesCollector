@@ -5,6 +5,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <local:ViewModelLocator x:Key="locator"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/MenuButtonStyle.xaml"/>
                 <ResourceDictionary Source="Themes/TextboxStyle.xaml"/>

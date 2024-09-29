@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptocurrenciesCollector.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptocurrenciesCollector.ViewModels", "CryptocurrenciesCollector.ViewModels\CryptocurrenciesCollector.ViewModels.csproj", "{1FE41AED-266E-4B54-A852-07E5EA204BB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptocurrenciesCollector.Helpers", "CryptocurrenciesCollector.Helpers\CryptocurrenciesCollector.Helpers.csproj", "{5C443B3B-0434-4274-A794-70EEBBD8EE7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptocurrenciesCollector.Helpers", "CryptocurrenciesCollector.Helpers\CryptocurrenciesCollector.Helpers.csproj", "{5C443B3B-0434-4274-A794-70EEBBD8EE7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptocurrenciesCollector.Resources", "CryptocurrenciesCollector.Resources\CryptocurrenciesCollector.Resources.csproj", "{76F1429D-25C9-48AE-BC22-8293717059EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{5C443B3B-0434-4274-A794-70EEBBD8EE7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C443B3B-0434-4274-A794-70EEBBD8EE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C443B3B-0434-4274-A794-70EEBBD8EE7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76F1429D-25C9-48AE-BC22-8293717059EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76F1429D-25C9-48AE-BC22-8293717059EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76F1429D-25C9-48AE-BC22-8293717059EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76F1429D-25C9-48AE-BC22-8293717059EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Candlestick" xml:space="preserve">
+    <value>Japanese candlestick chart</value>
+  </data>
   <data name="ChangeHeader" xml:space="preserve">
     <value>Change (24Hr%) </value>
   </data>
@@ -125,6 +128,9 @@
   </data>
   <data name="DarkTheme" xml:space="preserve">
     <value>Dark</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
   </data>
   <data name="DetailInformationHeader" xml:space="preserve">
     <value>Detail information</value>

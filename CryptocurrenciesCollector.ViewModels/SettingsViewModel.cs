@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
+using System.Windows.Controls.Primitives;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CryptocurrenciesCollector.Helpers;
@@ -26,40 +27,70 @@ namespace CryptocurrenciesCollector.ViewModels
         [RelayCommand]
         private void ChangeTheme(string theme)
         {
-            var darkTheme = Application.Current.Resources.MergedDictionaries
-                .FirstOrDefault(d => d.Source.ToString().Contains("DarkTheme.xaml"));
-
-            var lightTheme = Application.Current.Resources.MergedDictionaries
-                .FirstOrDefault(d => d.Source.ToString().Contains("LightTheme.xaml"));
-
-            if (theme == "DarkTheme" && darkTheme != null)
+            if (theme != Properties.Settings.Default.Theme)
             {
-                CurrentThemeIsDark = true;
-                Application.Current.Resources.MergedDictionaries.Remove(darkTheme);
-                Application.Current.Resources.MergedDictionaries.Add(darkTheme);
-            }
-            else if (theme == "LightTheme" && lightTheme != null)
-            {
-                CurrentThemeIsDark = false;
-                Application.Current.Resources.MergedDictionaries.Remove(lightTheme);
-                Application.Current.Resources.MergedDictionaries.Add(lightTheme);
+                var isCurrentThemeDark = Properties.Settings.Default.Theme == "Dark";
+
+                var darkTheme = Application.Current.Resources.MergedDictionaries
+                    .FirstOrDefault(d => d.Source.ToString().Contains("DarkTheme.xaml"));
+
+                var lightTheme = Application.Current.Resources.MergedDictionaries
+                    .FirstOrDefault(d => d.Source.ToString().Contains("LightTheme.xaml"));
+
+                if (!isCurrentThemeDark && darkTheme != null)
+                {
+                    CurrentThemeIsDark = true;
+                    Application.Current.Resources.MergedDictionaries.Remove(darkTheme);
+                    Application.Current.Resources.MergedDictionaries.Add(darkTheme);
+                }
+                else
+                {
+                    CurrentThemeIsDark = false;
+                    Application.Current.Resources.MergedDictionaries.Remove(lightTheme);
+                    Application.Current.Resources.MergedDictionaries.Add(lightTheme);
+                }
+                Properties.Settings.Default.Theme = CurrentThemeIsDark ? "Dark" : "Light";
+                Properties.Settings.Default.Save();
             }
         }
 
         [RelayCommand]
         private void ChangeLanguage(string language)
         {
-            if (language == "en")
+            if (language != Properties.Settings.Default.Language)
             {
-                CurrentLanguageIsEnglish = true;
-                LocalizeDictionary.Instance.Culture = new CultureInfo("en");
-            }
-            else if (language == "uk")
-            {
-                CurrentLanguageIsEnglish = false;
-                LocalizeDictionary.Instance.Culture = new CultureInfo("uk");
+                if (language == "English")
+                {
+                    CurrentLanguageIsEnglish = true;
+                    LocalizeDictionary.Instance.Culture = new CultureInfo("en");
+                }
+                else if (language == "Ukrainian")
+                {
+                    CurrentLanguageIsEnglish = false;
+                    LocalizeDictionary.Instance.Culture = new CultureInfo("uk");
+                }
+
+                Properties.Settings.Default.Language = CurrentLanguageIsEnglish ? "English" : "Українська";
+                Properties.Settings.Default.Save();
             }
         }
 
+        [RelayCommand]
+        private void InitializeSettings()
+        {
+            var themeName = Properties.Settings.Default.Theme;
+            var theme = Application.Current.Resources.MergedDictionaries
+                .FirstOrDefault(d => d.Source.ToString().Contains($"{themeName}Theme.xaml"));
+
+            var language = Properties.Settings.Default.Language;
+
+            LocalizeDictionary.Instance.Culture = language == "English" ? new CultureInfo("en") : new CultureInfo("uk");
+
+            Application.Current.Resources.MergedDictionaries.Remove(theme);
+            Application.Current.Resources.MergedDictionaries.Add(theme);
+
+            CurrentThemeIsDark = themeName == "Dark";
+            CurrentLanguageIsEnglish = language == "English";
+        }
     }
 }
