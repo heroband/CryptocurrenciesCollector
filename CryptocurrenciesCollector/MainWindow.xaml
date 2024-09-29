@@ -6,7 +6,11 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:CryptocurrenciesCollector"
         xmlns:enums="clr-namespace:CryptocurrenciesCollector.Models.Enums;assembly=CryptocurrenciesCollector.Models"
-        mc:Ignorable="d"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:LocalizeDictionary.DesignCulture="en"
+        lex:ResxLocalizationProvider.DefaultAssembly="CryptocurrenciesCollector"
+        lex:ResxLocalizationProvider.DefaultDictionary="CryptocurrenciesCollector.Resources.Language"
+        mc:Ignorable="d" 
         Title="MainWindow" 
         ResizeMode="NoResize"
         Height="800" Width="1200"
@@ -37,7 +41,7 @@
 
             <Grid Grid.Row="1">
                 <StackPanel Grid.Row="1">
-                    <RadioButton Content="Home" 
+                    <RadioButton Content="{lex:Loc Home}" 
                                  IsChecked="True"
                                  Height="50"
                                  HorizontalAlignment="Stretch"
@@ -46,7 +50,7 @@
                                  Command="{Binding NavigateToCommand}"
                                  CommandParameter="{x:Static enums:NavigationPage.Main}"
                                  Style="{StaticResource MenuButtonStyle}"/>
-                    <RadioButton Content="Convert" 
+                    <RadioButton Content="{lex:Loc Convert}" 
                                  Height="50"
                                  HorizontalAlignment="Stretch"
                                  Foreground="{DynamicResource Text}" 
@@ -54,7 +58,7 @@
                                  Command="{Binding NavigateToCommand}" 
                                  CommandParameter="{x:Static enums:NavigationPage.Convert}"
                                  Style="{StaticResource MenuButtonStyle}"/>
-                    <RadioButton Content="Settings" 
+                    <RadioButton Content="{lex:Loc Settings}" 
                                  Height="50"
                                  HorizontalAlignment="Stretch"
                                  Foreground="{DynamicResource Text}"

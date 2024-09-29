@@ -6,6 +6,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:helpers="clr-namespace:CryptocurrenciesCollector.Helpers.Behaviors;assembly=CryptocurrenciesCollector.Helpers"
       xmlns:oxy="http://oxyplot.org/wpf"
+      xmlns:lex="http://wpflocalizeextension.codeplex.com"
+      lex:LocalizeDictionary.DesignCulture="en"
+      lex:ResxLocalizationProvider.DefaultAssembly="CryptocurrenciesCollector"
+      lex:ResxLocalizationProvider.DefaultDictionary="CryptocurrenciesCollector.Resources.Language"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DetailInformationPage">
@@ -27,7 +31,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Detail information"
+            <TextBlock Text="{lex:Loc DetailInformationHeader}"
                        Foreground="{DynamicResource Text}"
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Top"
@@ -50,28 +54,28 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Name " 
+                <TextBlock Text="{lex:Loc NameHeader}" 
                            Foreground="{DynamicResource Text}" 
                            Grid.Column="0" 
                            Grid.Row="0" 
                            FontWeight="SemiBold" 
                            FontSize="16"
                            HorizontalAlignment="Left"/>
-                <TextBlock Text="Price (USD) " 
+                <TextBlock Text="{lex:Loc PriceHeader}" 
                            Foreground="{DynamicResource Text}" 
                            Grid.Column="0" 
                            Grid.Row="1" 
                            FontWeight="SemiBold" 
                            FontSize="16"
                            HorizontalAlignment="Left"/>
-                <TextBlock Text="Volume (24Hr) " 
+                <TextBlock Text="{lex:Loc VolumeHeader}" 
                            Foreground="{DynamicResource Text}" 
                            Grid.Column="0" 
                            Grid.Row="2" 
                            FontWeight="SemiBold" 
                            FontSize="16"
                            HorizontalAlignment="Left"/>
-                <TextBlock Text="Change (24Hr%) " 
+                <TextBlock Text="{lex:Loc ChangeHeader}" 
                            Foreground="{DynamicResource Text}" 
                            Grid.Column="0" 
                            Grid.Row="3" 
@@ -105,7 +109,7 @@
                            HorizontalAlignment="Left"/>
             </Grid>
 
-            <TextBlock Text="No markets available" 
+            <TextBlock Text="{lex:Loc NoMarketsAvailable}" 
                        Foreground="Red" 
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Top"
@@ -152,7 +156,6 @@
 
                 <ListView.Resources>
                     <Style TargetType="GridViewColumnHeader">
-                        <Setter Property="IsHitTestVisible" Value="False"/>
                         <Setter Property="Background" Value="Transparent"/>
                         <Setter Property="Foreground" Value="{DynamicResource Text}"/>
                     </Style>
@@ -166,11 +169,12 @@
                 <ListView.View>
                     <GridView>
 
-                        <GridViewColumn Header="Markets" Width="Auto">
+                        <GridViewColumn Header="{lex:Loc MarketsHeader}" Width="Auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding ExchangeId}"
                                                Foreground="{DynamicResource Text}"/>
+
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -186,7 +190,7 @@
                             
                             <GridViewColumn.HeaderTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="MarketPrice" Cursor="Hand">
+                                    <TextBlock Text="{lex:Loc PriceHeader}" Cursor="Hand">
                                         <TextBlock.InputBindings>
                                             <MouseBinding Gesture="LeftClick"
                                                           Command="{Binding DataContext.SortByMarketPriceCommand, RelativeSource={RelativeSource AncestorType=Page}}"/>
@@ -220,13 +224,13 @@
                   HorizontalAlignment="Center" Margin="0 5"
                   VerticalAlignment="Bottom">
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
-                    <RadioButton Content="1D" 
+                    <RadioButton Content="{lex:Loc Inerval1D}" 
                                  Command="{Binding GetCandlesWith1DayIntervalCommand}"
                                  Height="25" 
                                  Foreground="{DynamicResource Text}"
                                  FontSize="14"
                                  Style="{StaticResource MenuButtonStyle}"/>
-                    <RadioButton Content="7D"
+                    <RadioButton Content="{lex:Loc Inerval7D}"
                                  Command="{Binding GetCandlesWith7DaysIntervalCommand}"
                                  Height="25"
                                  HorizontalAlignment="Stretch"
@@ -234,7 +238,7 @@
                                  FontSize="14"
                                  Style="{StaticResource MenuButtonStyle}"
                                  Margin="15 0"/>
-                    <RadioButton Content="1M" 
+                    <RadioButton Content="{lex:Loc Inerval1M}" 
                                  IsChecked="True"
                                  Command="{Binding GetCandlesWith1MonthIntervalCommand}"
                                  Height="25"
@@ -242,7 +246,7 @@
                                  Foreground="{DynamicResource Text}"
                                  FontSize="14"
                                  Style="{StaticResource MenuButtonStyle}"/>
-                    <RadioButton Content="3M" 
+                    <RadioButton Content="{lex:Loc Inerval3M}" 
                                  Command="{Binding GetCandlesWith3MonthsIntervalCommand}"
                                  Height="25"
                                  HorizontalAlignment="Stretch"
@@ -250,7 +254,7 @@
                                  FontSize="14"
                                  Style="{StaticResource MenuButtonStyle}"
                                  Margin="15 0"/>
-                    <RadioButton Content="1Y" 
+                    <RadioButton Content="{lex:Loc Inerval1Y}" 
                                  Command="{Binding GetCandlesWith1YearIntervalCommand}"
                                  Height="25"
                                  HorizontalAlignment="Stretch"

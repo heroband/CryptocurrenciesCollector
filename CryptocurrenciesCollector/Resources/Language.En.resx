@@ -117,13 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChangeHeader" xml:space="preserve">
+    <value>Change (24Hr%) </value>
+  </data>
+  <data name="Convert" xml:space="preserve">
+    <value>Convert</value>
+  </data>
+  <data name="DarkTheme" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="DetailInformationHeader" xml:space="preserve">
+    <value>Detail information</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Inerval1D" xml:space="preserve">
+    <value>1D</value>
+  </data>
+  <data name="Inerval1M" xml:space="preserve">
+    <value>1M</value>
+  </data>
+  <data name="Inerval1Y" xml:space="preserve">
+    <value>1Y</value>
+  </data>
+  <data name="Inerval3M" xml:space="preserve">
+    <value>3M</value>
+  </data>
+  <data name="Inerval7D" xml:space="preserve">
+    <value>7D</value>
+  </data>
+  <data name="LightTheme" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="MarketsHeader" xml:space="preserve">
+    <value>Markets</value>
+  </data>
   <data name="NameHeader" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="NoCryptocurrencyMessage" xml:space="preserve">
+    <value>No such cryptocurrency</value>
+  </data>
+  <data name="NoMarketsAvailable" xml:space="preserve">
+    <value>No markets available</value>
+  </data>
+  <data name="PriceHeader" xml:space="preserve">
+    <value>Price (USD)</value>
   </data>
   <data name="RankHeader" xml:space="preserve">
     <value>Rank</value>
   </data>
+  <data name="SearchPlaceHolder" xml:space="preserve">
+    <value>Search here...</value>
+  </data>
+  <data name="SearchResults" xml:space="preserve">
+    <value>Results</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="Top10Text" xml:space="preserve">
     <value>Top 10</value>
+  </data>
+  <data name="VolumeHeader" xml:space="preserve">
+    <value>Volume (24Hr)</value>
   </data>
 </root>

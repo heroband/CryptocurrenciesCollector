@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
-      lex:LocalizeDictionary.DesignCulture="uk"
+      lex:LocalizeDictionary.DesignCulture="en"
       lex:ResxLocalizationProvider.DefaultAssembly="CryptocurrenciesCollector"
       lex:ResxLocalizationProvider.DefaultDictionary="CryptocurrenciesCollector.Resources.Language"
       mc:Ignorable="d" 
@@ -36,7 +36,6 @@
                     <Style TargetType="ListViewItem">
                         <Setter Property="Background" Value="Transparent"/>
                         <Setter Property="BorderBrush" Value="Transparent"/>
-
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="{DynamicResource HoverBackground}"/>

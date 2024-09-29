@@ -3,8 +3,8 @@
     <SolidColorBrush Color="#fff" x:Key="Backdrop"/>
     <SolidColorBrush Color="#FF461313" x:Key="Text"/>
     <SolidColorBrush Color="#dcdde1" x:Key="Card"/>
-    <SolidColorBrush Color="DarkGray" x:Key="SubText"/>
-    <SolidColorBrush Color="#FFCBCFDC"  x:Key="PressedButton"/>
+    <SolidColorBrush Color="DimGray" x:Key="SubText"/>
+    <SolidColorBrush Color="#FFCBCFDC" x:Key="PressedButton"/>
     <SolidColorBrush Color="#FFDDDDDD" x:Key="SelectedBackgroundColor"/>
     <SolidColorBrush Color="#FFCCCCCC" x:Key="HoverBackgroundColor"/>
 </ResourceDictionary>

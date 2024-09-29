@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace CryptocurrenciesCollector.Helpers.Behaviors
 {
-    public class PlotViewBehavior : Behavior<PlotView>
+    public partial class PlotViewBehavior : Behavior<PlotView>
     {
         protected override void OnAttached()
         {

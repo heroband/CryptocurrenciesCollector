@@ -117,13 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChangeHeader" xml:space="preserve">
+    <value>Зміни ціни (24год.%) </value>
+  </data>
+  <data name="Convert" xml:space="preserve">
+    <value>Конвертація</value>
+  </data>
+  <data name="DarkTheme" xml:space="preserve">
+    <value>Темна</value>
+  </data>
+  <data name="DetailInformationHeader" xml:space="preserve">
+    <value>Детальна інформація</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Головна</value>
+  </data>
+  <data name="Inerval1D" xml:space="preserve">
+    <value>1Д</value>
+  </data>
+  <data name="Inerval1M" xml:space="preserve">
+    <value>1М</value>
+  </data>
+  <data name="Inerval1Y" xml:space="preserve">
+    <value>1Р</value>
+  </data>
+  <data name="Inerval3M" xml:space="preserve">
+    <value>3М</value>
+  </data>
+  <data name="Inerval7D" xml:space="preserve">
+    <value>7Д</value>
+  </data>
+  <data name="LightTheme" xml:space="preserve">
+    <value>Світла</value>
+  </data>
+  <data name="MarketsHeader" xml:space="preserve">
+    <value>Біржі</value>
+  </data>
   <data name="NameHeader" xml:space="preserve">
     <value>Назва</value>
+  </data>
+  <data name="NoCryptocurrencyMessage" xml:space="preserve">
+    <value>Такої криптовалюти немає</value>
+  </data>
+  <data name="NoMarketsAvailable" xml:space="preserve">
+    <value>Доступних магазинів немає</value>
+  </data>
+  <data name="PriceHeader" xml:space="preserve">
+    <value>Ціна (USD)</value>
   </data>
   <data name="RankHeader" xml:space="preserve">
     <value>Рейтинг</value>
   </data>
+  <data name="SearchPlaceHolder" xml:space="preserve">
+    <value>Пошук</value>
+  </data>
+  <data name="SearchResults" xml:space="preserve">
+    <value>Результати пошуку</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Налаштування</value>
+  </data>
   <data name="Top10Text" xml:space="preserve">
     <value>Топ 10</value>
+  </data>
+  <data name="VolumeHeader" xml:space="preserve">
+    <value>Обсяг торгів</value>
   </data>
 </root>
