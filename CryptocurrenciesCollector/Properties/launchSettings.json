@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CryptocurrenciesCollector": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ENVIRONMENT_STAGE": "Development"
+      }
+    }
+  }
+}

@@ -3,10 +3,113 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:CryptocurrenciesCollector"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        xmlns:enums="clr-namespace:CryptocurrenciesCollector.Models.Enums;assembly=CryptocurrenciesCollector.Models"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:LocalizeDictionary.DesignCulture="en"
+        lex:ResxLocalizationProvider.DefaultAssembly="CryptocurrenciesCollector.Resources"
+        lex:ResxLocalizationProvider.DefaultDictionary="CryptocurrenciesCollector.Resources.Language"
+        mc:Ignorable="d" 
+        Title="MainWindow" 
+        ResizeMode="NoResize"
+        Height="800" Width="1200"
+        Background="Transparent">
 
-    </Grid>
+
+    <Border Background="{DynamicResource Backdrop}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.RowSpan="2" Background="{DynamicResource Card}"/>
+
+            <TextBlock Grid.Row="0"
+                       Margin="10 0"
+                       Text="Cryptocurrencies"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       FontSize="22"
+                       FontFamily="Comic Sans MS"
+                       Foreground="{DynamicResource Text}"/>
+
+            <Grid Grid.Row="1">
+                <StackPanel Grid.Row="1">
+                    <RadioButton Content="{lex:Loc Home}" 
+                                 IsChecked="True"
+                                 Height="50"
+                                 HorizontalAlignment="Stretch"
+                                 Foreground="{DynamicResource Text}"
+                                 FontSize="14"
+                                 Command="{Binding NavigateToCommand}"
+                                 CommandParameter="{x:Static enums:NavigationPage.Main}"
+                                 Style="{StaticResource MenuButtonStyle}"/>
+                    <RadioButton Content="{lex:Loc Convert}" 
+                                 Height="50"
+                                 HorizontalAlignment="Stretch"
+                                 Foreground="{DynamicResource Text}" 
+                                 FontSize="14"
+                                 Command="{Binding NavigateToCommand}" 
+                                 CommandParameter="{x:Static enums:NavigationPage.Convert}"
+                                 Style="{StaticResource MenuButtonStyle}"/>
+                    <RadioButton Content="{lex:Loc Settings}" 
+                                 Height="50"
+                                 HorizontalAlignment="Stretch"
+                                 Foreground="{DynamicResource Text}"
+                                 FontSize="14"
+                                 Command="{Binding NavigateToCommand}"
+                                 CommandParameter="{x:Static enums:NavigationPage.Settings}"
+                                 Style="{StaticResource MenuButtonStyle}"/>
+                </StackPanel>
+            </Grid>
+
+            <Border Grid.Column="1" 
+                    Margin="30" 
+                    Background="{DynamicResource Card}"
+                    CornerRadius="8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Content="🔍" 
+                            BorderThickness="0"
+                            Background="Transparent"
+                            Foreground="{DynamicResource Text}"
+                            Grid.Column="0"
+                            Width="40" 
+                            Height="40" 
+                            HorizontalAlignment="Left"
+                            Command="{Binding GetSearchedCryptocurrenciesCommand}"/>
+                    <TextBox Grid.Column="1"
+                             Text="{Binding SearchText}"
+                             Height="40"
+                             HorizontalAlignment = "Stretch"
+                             VerticalAlignment="Center"
+                             Style="{StaticResource TextboxStyle}"/>    
+                </Grid>
+            </Border>
+                
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Frame x:Name="BaseFrame"
+                       Margin="30 0 30 10"
+                       NavigationUIVisibility="Hidden"/>
+            </Grid>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding NavigateToCommand}" 
+                           CommandParameter="{x:Static enums:NavigationPage.Main}"/>
+                    <i:InvokeCommandAction Command="{Binding SettingsViewModel.InitializeSettingsCommand, Source={StaticResource locator}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Grid>
+    </Border>
 </Window>
